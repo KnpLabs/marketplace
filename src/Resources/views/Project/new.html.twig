@@ -1,0 +1,38 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Create a new project</h1>
+</div>
+
+<form method="post" action="{{ path('project_create') }}">
+  
+  {{ form_errors(form) }}
+
+  <fieldset>
+    <div class="clearfix">
+      {{ form_label(form.name) }}
+      {{ form_errors(form.name) }}
+      <div class="input">
+        {{ form_widget(form.name, { 'attr': {'class': 'xlarge'} }) }}
+      </div>
+    </div>
+
+    <div class="clearfix">
+      {{ form_label(form.description) }}
+      {{ form_errors(form.description) }}
+      <div class="input">
+        {{ form_widget(form.description, { 'attr': {'class': 'xlarge'} }) }}
+      </div>
+    </div>
+  </fieldset>
+
+  {{ form_rest(form) }}
+
+  <div class="actions">
+    <button class="btn primary">Create project</button>
+    <a class="btn" href="{{ path('homepage') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

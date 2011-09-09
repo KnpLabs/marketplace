@@ -1,6 +1,7 @@
 <html>
 <head>
-    <link href="/css/bootstrap-1.2.0.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/bootstrap-1.2.0.css" rel="stylesheet" type="text/css" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
     <title>Idea Marketplace</title>
 </head>
 <body>
@@ -9,11 +10,16 @@
       <div class="topbar-inner">
         <div class="container">
           <h3><a href="{{ path('homepage') }}">Idea Marketplace</a></h3>
+          <ul class="nav">
+            <li><a href="{{ path('project_new') }}">New project</a></li>
+          </ul>
         </div>
       </div>
     </div>
 
-{% block content %}{% endblock %}
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
 
 </body>
 </html>
