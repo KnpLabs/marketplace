@@ -63,7 +63,7 @@ $app->before(function() use ($app) {
             'autoincrement' => true
         ));
         $commentTable->addColumn('content', 'text');
-        $commentTable->addColumn('parent_id', 'integer', array('unsigned' => true));
+        $commentTable->addColumn('project_id', 'integer', array('unsigned' => true));
         $commentTable->setPrimaryKey(array('id'));
         $commentTable->addForeignKeyConstraint($projectTable, array('project_id'), array('id'), array('onDelete' => 'CASCADE'));
 

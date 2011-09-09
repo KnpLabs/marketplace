@@ -6,4 +6,33 @@
     </div>
 
     <p>{{ project.description }}</p>
+
+    <h2>Comments</h2>
+
+    {% for comment in comments %}
+        <blockquote><p>{{ comment.content }}</p></blockquote>
+    {% endfor %}
+
+    <div>
+        <form method="post" action="{{ path('project_comment', { "id": project.id }) }}">
+
+            {{ form_errors(form) }}
+            
+            <fieldset>
+                <div class="clearfix">
+                    {{ form_label(form.content) }}
+                    {{ form_errors(form.content) }}
+                    <div class="input">
+                        {{ form_widget(form.content, { "attr": { "class": "xlarge" } }) }}
+                    </div>
+                </div>
+            </fieldset>
+
+          {{ form_rest(form) }}
+
+            <div class="actions">
+                <button class="btn primary">Post comment</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}

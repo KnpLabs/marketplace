@@ -14,6 +14,34 @@ $app->get('/', function() use ($app) {
 })->bind('homepage');
 
 /**
+ * Adds a comment to a project
+ */
+ $app->post('/project/{id}/comment', function($id) use ($app) {
+    $form = $app['form.factory']->create(new Form\CommentType());
+    $form->bindRequest($app['request']);
+
+    if ($form->isValid()) {
+        $comment = $form->getData();
+
+        unset($comment['id']);
+
+        $comment['project_id'] = $id;
+        $app['db']->insert('comment', $comment);
+
+        return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
+    }
+
+    $project  = $app['db']->fetchAssoc('SELECT * FROM project WHERE id = ?', array($id));
+    $comments = $app['db']->fetchAll('SELECT * FROM comment WHERE project_id = ?', array($id));
+
+    return $app['twig']->render('Project/show.html.twig', array(
+        'form'     => $form->createView(),
+        'project'  => $project,
+        'comments' => $comments,
+    ));
+ })->bind('project_comment');
+
+/**
  * Project creation form
  */
 $app->get('/project/new', function() use ($app) {
@@ -28,10 +56,14 @@ $app->get('/project/new', function() use ($app) {
  * Project show
  */
 $app->get('/project/{id}', function($id) use ($app) {
-    $project = $app['db']->fetchAssoc('SELECT * FROM project WHERE id = ?', array($id));
+    $project  = $app['db']->fetchAssoc('SELECT * FROM project WHERE id = ?', array($id));
+    $comments = $app['db']->fetchAll('SELECT * FROM comment WHERE project_id = ?', array($id));
+    $form     = $app['form.factory']->create(new Form\CommentType());
 
     return $app['twig']->render('Project/show.html.twig', array(
-       'project' => $project,
+        'form'     => $form->createView(),
+        'project'  => $project,
+        'comments' => $comments,
     ));
 })->bind('project_show');
 
