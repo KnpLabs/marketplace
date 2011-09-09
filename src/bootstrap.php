@@ -23,7 +23,7 @@ $app->register(new DoctrineExtension());
 
 $app->register(new TwigExtension(), array(
     'twig.path' => array(
-        __DIR__.'/Resources/view',
+        __DIR__.'/Resources/views',
         __DIR__.'/../vendor/Symfony/Bridge/Twig/Resources/views/Form',
     ),
     'twig.class_path' => __DIR__.'/../vendor/silex/vendor/twig/lib',
@@ -32,5 +32,7 @@ $app->register(new TwigExtension(), array(
 if (is_readable(__DIR__.'/config.php')) {
     require_once __DIR__.'/config.php';
 }
+
+$app['debug'] = true;
 
 return $app;
