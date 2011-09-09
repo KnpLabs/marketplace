@@ -1,3 +1,9 @@
 [submodule "vendor/silex"]
 	path = vendor/silex
 	url = https://github.com/fabpot/Silex.git
+[submodule "vendor/Symfony/Component/Form"]
+	path = vendor/Symfony/Component/Form
+	url = https://github.com/symfony/Form.git
+[submodule "vendor/Symfony/Bridge/Twig"]
+	path = vendor/Symfony/Bridge/Twig
+	url = https://github.com/symfony/TwigBridge.git
