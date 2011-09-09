@@ -48,7 +48,10 @@ $app->before(function() use ($app) {
         $schema = new Doctrine\DBAL\Schema\Schema();
 
         $projectTable = $schema->createTable('project');
-        $projectTable->addColumn('id', 'integer', array('unsigned' => true));
+        $projectTable->addColumn('id', 'integer', array(
+            'unsigned'       => true,
+            'autoincrement' => true
+        ));
         $projectTable->addColumn('name', 'string');
         $projectTable->addColumn('description', 'text');
         $projectTable->setPrimaryKey(array('id'));
