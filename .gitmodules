@@ -7,3 +7,6 @@
 [submodule "vendor/Symfony/Bridge/Twig"]
 	path = vendor/Symfony/Bridge/Twig
 	url = https://github.com/symfony/TwigBridge.git
+[submodule "vendor/Symfony/Component/Translation"]
+	path = vendor/Symfony/Component/Translation
+	url = https://github.com/symfony/Translation.git
