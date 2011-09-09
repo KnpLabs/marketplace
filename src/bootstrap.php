@@ -44,18 +44,28 @@ if (is_readable(__DIR__.'/config.php')) {
 $app->before(function() use ($app) {
     $manager = $app['db']->getSchemaManager();
 
-    if (count($manager->listTables()) == 0) {
+    if (count($manager->listTables()) < 2) {
         $schema = new Doctrine\DBAL\Schema\Schema();
 
         $projectTable = $schema->createTable('project');
         $projectTable->addColumn('id', 'integer', array(
-            'unsigned'       => true,
+            'unsigned'      => true,
             'autoincrement' => true
         ));
         $projectTable->addColumn('name', 'string');
         $projectTable->addColumn('description', 'text');
         $projectTable->setPrimaryKey(array('id'));
         $projectTable->addUniqueIndex(array('name'));
+
+        $commentTable = $schema->createTable('comment');
+        $commentTable->addColumn('id', 'integer', array(
+            'unsigned'      => true,
+            'autoincrement' => true
+        ));
+        $commentTable->addColumn('content', 'text');
+        $commentTable->addColumn('parent_id', 'integer', array('unsigned' => true));
+        $commentTable->setPrimaryKey(array('id'));
+        $commentTable->addForeignKeyConstraint($projectTable, array('project_id'), array('id'), array('onDelete' => 'CASCADE'));
 
         $queries = $schema->toSql($app['db']->getDatabasePlatform());
 
