@@ -5,8 +5,10 @@ require_once __DIR__.'/../vendor/silex/autoload.php';
 $app = new Silex\Application();
 
 $app['autoloader']->registerNamespaces(array(
-    'Symfony' => __DIR__.'/../vendor/',
-    'Form'    => __DIR__,
+    'Symfony'          => __DIR__.'/../vendor/',
+    'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
+    'Form'             => __DIR__,
+    'Entity'           => __DIR__,
 ));
 
 use Silex\Extension\SymfonyBridgesExtension;
@@ -15,10 +17,26 @@ use Silex\Extension\TwigExtension;
 use Silex\Extension\FormExtension;
 use Silex\Extension\DoctrineExtension;
 use Silex\Extension\TranslationExtension;
+use Silex\Extension\ValidatorExtension;
+
+use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 $app->register(new SymfonyBridgesExtension());
 $app->register(new UrlGeneratorExtension());
 $app->register(new FormExtension());
+
+$app->register(new ValidatorExtension());
+
+$app['validator.mapping.class_metadata_factory'] = $app->share(function () use ($app) {
+    return new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+});
+
+AnnotationRegistry::registerLoader(function($className) {
+    return class_exists($className);
+});
 
 $app->register(new DoctrineExtension(), array(
     'db.dbal.class_path'    => __DIR__.'/../vendor/doctrine-dbal/lib',

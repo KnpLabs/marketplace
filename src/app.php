@@ -45,7 +45,7 @@ $app->get('/', function() use ($app) {
  * Project creation form
  */
 $app->get('/project/new', function() use ($app) {
-    $form = $app['form.factory']->create(new Form\ProjectType());
+    $form = $app['form.factory']->create(new Form\ProjectType(), new Entity\Project());
 
     return $app['twig']->render('Project/new.html.twig', array(
         'form' => $form->createView(),
@@ -71,13 +71,13 @@ $app->get('/project/{id}', function($id) use ($app) {
  * Project creation
  */
 $app->post('/project', function() use ($app) {
-    $project = $app['request']->get('project');
-    $form    = $app['form.factory']->create(new Form\ProjectType());
+    $form = $app['form.factory']->create(new Form\ProjectType(), new Entity\Project());
 
     $form->bindRequest($app['request']);
 
     if ($form->isValid()) {
-        $project = $form->getData();
+
+        $project = (array) $form->getData();
 
         unset($project['id']);
 
