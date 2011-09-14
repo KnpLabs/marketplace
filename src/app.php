@@ -17,11 +17,11 @@ $app->get('/', function() use ($app) {
  * Adds a comment to a project
  */
  $app->post('/project/{id}/comment', function($id) use ($app) {
-    $form = $app['form.factory']->create(new Form\CommentType());
+    $form = $app['form.factory']->create(new Form\CommentType(), new Entity\Comment());
     $form->bindRequest($app['request']);
 
     if ($form->isValid()) {
-        $comment = $form->getData();
+        $comment = (array) $form->getData();
 
         unset($comment['id']);
 
@@ -58,7 +58,7 @@ $app->get('/project/new', function() use ($app) {
 $app->get('/project/{id}', function($id) use ($app) {
     $project  = $app['db']->fetchAssoc('SELECT * FROM project WHERE id = ?', array($id));
     $comments = $app['db']->fetchAll('SELECT * FROM comment WHERE project_id = ?', array($id));
-    $form     = $app['form.factory']->create(new Form\CommentType());
+    $form     = $app['form.factory']->create(new Form\CommentType(), new Entity\Comment());
 
     return $app['twig']->render('Project/show.html.twig', array(
         'form'     => $form->createView(),
