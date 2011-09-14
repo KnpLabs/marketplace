@@ -81,6 +81,10 @@ $app->before(function() use ($app) {
         }
     }
 
+    if (isset($app['auth']) && !$app['auth']($app['session']->get('username'))) {
+        die('You are not authorized');
+    }
+
     $app['twig']->addGlobal('username', $app['session']->get('username'));
 
     $manager = $app['db']->getSchemaManager();
