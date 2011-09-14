@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__.'/../vendor/silex/autoload.php';
+require_once __DIR__.'/../vendor/lightopenid/openid.php';
 
 $app = new Silex\Application();
 
@@ -15,9 +16,11 @@ use Silex\Extension\TwigExtension;
 use Silex\Extension\FormExtension;
 use Silex\Extension\DoctrineExtension;
 use Silex\Extension\TranslationExtension;
+use Silex\Extension\SessionExtension;
 
 $app->register(new SymfonyBridgesExtension());
 $app->register(new UrlGeneratorExtension());
+$app->register(new SessionExtension());
 $app->register(new FormExtension());
 
 $app->register(new DoctrineExtension(), array(
@@ -42,6 +45,26 @@ if (is_readable(__DIR__.'/config.php')) {
 }
 
 $app->before(function() use ($app) {
+
+    $app['session']->start();
+
+    if (!$app['session']->has('username')) {
+        $openid = new LightOpenID($_SERVER['SERVER_NAME']);
+
+        if (!$openid->mode) {
+            $openid->identity = 'https://www.google.com/accounts/o8/id';
+            $openid->required = array('email' => 'contact/email');
+            return $app->redirect($openid->authUrl());
+        } else {
+            if ($openid->validate()) {
+                $attributes = $openid->getAttributes();
+                $app['session']->set('username', $attributes['contact/email']);
+            }
+        }
+    }
+
+    $app['twig']->addGlobal('username', $app['session']->get('username'));
+
     $manager = $app['db']->getSchemaManager();
 
     if (count($manager->listTables()) < 2) {

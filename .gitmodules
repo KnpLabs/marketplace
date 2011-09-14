@@ -19,3 +19,6 @@
 [submodule "vendor/Symfony/Component/Validator"]
 	path = vendor/Symfony/Component/Validator
 	url = https://github.com/symfony/Validator.git
+[submodule "vendor/lightopenid"]
+	path = vendor/lightopenid
+	url = git://gitorious.org/lightopenid/lightopenid.git
