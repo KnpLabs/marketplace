@@ -95,6 +95,7 @@ $app->before(function() use ($app) {
         ));
         $projectTable->addColumn('name', 'string');
         $projectTable->addColumn('description', 'text');
+        $projectTable->addColumn('username', 'string');
         $projectTable->setPrimaryKey(array('id'));
         $projectTable->addUniqueIndex(array('name'));
 
@@ -105,6 +106,7 @@ $app->before(function() use ($app) {
         ));
         $commentTable->addColumn('content', 'text');
         $commentTable->addColumn('project_id', 'integer', array('unsigned' => true));
+        $commentTable->addColumn('username', 'string');
         $commentTable->setPrimaryKey(array('id'));
         $commentTable->addForeignKeyConstraint($projectTable, array('project_id'), array('id'), array('onDelete' => 'CASCADE'));
 

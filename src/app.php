@@ -26,6 +26,8 @@ $app->get('/', function() use ($app) {
         unset($comment['id']);
 
         $comment['project_id'] = $id;
+        $comment['username']   = $app['session']->get('username');
+
         $app['db']->insert('comment', $comment);
 
         return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
@@ -80,6 +82,8 @@ $app->post('/project', function() use ($app) {
         $project = (array) $form->getData();
 
         unset($project['id']);
+
+        $project['username'] = $app['session']->get('username');
 
         $app['db']->insert('project', $project);
 

@@ -2,15 +2,23 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>{{ project.name }}</h1>
+        <h1>{{ project.name }} <small>by {{ project.username }}</small></h1>
     </div>
 
     <p>{{ project.description }}</p>
 
-    <h2>Comments</h2>
+    <h2>
+        Comments
+        {% if comments|length %}
+        <small>{{ comments|length }} of them</small>
+        {% endif %}
+    </h2>
 
     {% for comment in comments %}
-        <blockquote><p>{{ comment.content }}</p></blockquote>
+        <blockquote>
+            <p>{{ comment.content }}</p>
+            <small>{{ comment.username }}</small>
+        </blockquote>
     {% endfor %}
 
     <div>
