@@ -2,23 +2,28 @@
 
 namespace Marketplace;
 
-use Doctrine\DBAL\Connection;
+use Silex\Application;
 use Doctrine\DBAL\Schema\Schema;
 use Symfony\Component\Finder\Finder;
 
 class Migration
 {
+    private $app;
+
     private $schema;
 
     private $conn;
 
     private $current_version = null;
 
-    public function __construct(Schema $schema, Connection $conn, Finder $finder = null)
+    private $migration_infos = array();
+
+    public function __construct(Application $app, Schema $schema, Finder $finder = null)
     {
         $this->schema   = $schema;
         $this->toSchema = clone($schema);
-        $this->conn     = $conn;
+        $this->app      = $app;
+        $this->conn     = $app['db'];
         $this->finder   = $finder ?: new Finder();
     }
 
@@ -50,12 +55,17 @@ class Migration
                         throw new \RuntimeException(sprintf('Could not find class "%s" in "%s"', $fqcn, $migration));
                     }
 
-                    $migrations[] = new $fqcn($this->toSchema);
+                    $migrations[] = new $fqcn();
                 }
             }
         }
 
         return $migrations;
+    }
+
+    public function getMigrationInfos()
+    {
+        return $this->migrationInfos;
     }
 
     public function getCurrentVersion()
@@ -98,15 +108,31 @@ class Migration
         $migrations = $this->findMigrations($from);
 
         if (count($migrations) == 0) {
-            return true;
+            return null;
         }
 
         foreach ($migrations as $migration) {
-            $migration->up();
+            $migration->schemaUp($this->toSchema);
         }
 
         $this->buildSchema($this->toSchema);
 
+        foreach ($migrations as $migration) {
+            $migration->appUp($this->app);
+        }
+
+        $migrationInfos = array();
+
+        foreach ($migrations as $migration) {
+            if (null !== $migration->getMigrationInfo()) {
+                $migrationInfos[$migration->getVersion()] = $migration->getMigrationInfo();
+            }
+        }
+
+        $this->migrationInfos = $migrationInfos;
+
         $this->setCurrentVersion($migration->getVersion());
+
+        return true;
     }
 }

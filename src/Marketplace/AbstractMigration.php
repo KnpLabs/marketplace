@@ -3,16 +3,10 @@
 namespace Marketplace;
 
 use Doctrine\DBAL\Schema\Schema;
+use Silex\Application;
 
 abstract class AbstractMigration
 {
-    private $schema;
-
-    public function __construct(Schema $schema)
-    {
-        $this->schema = $schema;
-    }
-
     public function getVersion()
     {
         $rc = new \ReflectionClass($this);
@@ -29,7 +23,16 @@ abstract class AbstractMigration
         return $this->schema;
     }
 
-    abstract public function up();
+    public function getMigrationInfo()
+    {
+        return null;
+    }
 
-    abstract public function down();
+    public function schemaUp(Schema $schema) {}
+
+    public function schemaDown(Schema $schema) {}
+
+    public function appUp(Application $app) {}
+
+    public function appDown(Application $app) {}
 }

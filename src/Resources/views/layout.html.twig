@@ -19,6 +19,10 @@
     </div>
 
     <div class="container">
+      {% if migration_infos is defined %}
+        {% include "_migration_infos.html.twig" %}
+      {% endif %}
+
       {% block content %}{% endblock %}
     </div>
 

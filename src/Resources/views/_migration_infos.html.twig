@@ -1,0 +1,8 @@
+<div class="alert-message block-message success">
+    <p><strong>Holy Guacamole!</strong> The app has been upgraded, here are your new toys:</p>
+    <ul>
+    {% for info in migration_infos %}
+        <li>{{ info }}</li>
+    {% endfor %}
+    </ul>
+</div>

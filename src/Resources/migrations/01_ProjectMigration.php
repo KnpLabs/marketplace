@@ -3,12 +3,13 @@
 namespace Migration;
 
 use Marketplace\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 
 class ProjectMigration extends AbstractMigration
 {
-    public function up()
+    public function schemaUp(Schema $schema)
     {
-        $projectTable = $this->getSchema()->createTable('project');
+        $projectTable = $schema->createTable('project');
         $projectTable->addColumn('id', 'integer', array(
             'unsigned'      => true,
             'autoincrement' => true
@@ -20,8 +21,8 @@ class ProjectMigration extends AbstractMigration
         $projectTable->addUniqueIndex(array('name'));
     }
 
-    public function down()
+    public function getMigrationInfo()
     {
-        throw new \RuntimeException('Unsupported operation');
+        return 'Added project table';
     }
 }

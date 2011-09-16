@@ -3,12 +3,13 @@
 namespace Migration;
 
 use Marketplace\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
 
 class CommentMigration extends AbstractMigration
 {
-    public function up()
+    public function schemaUp(Schema $schema)
     {
-        $commentTable = $this->getSchema()->createTable('comment');
+        $commentTable = $schema->createTable('comment');
         $commentTable->addColumn('id', 'integer', array(
             'unsigned'      => true,
             'autoincrement' => true
@@ -17,11 +18,11 @@ class CommentMigration extends AbstractMigration
         $commentTable->addColumn('project_id', 'integer', array('unsigned' => true));
         $commentTable->addColumn('username', 'string');
         $commentTable->setPrimaryKey(array('id'));
-        $commentTable->addForeignKeyConstraint($this->getSchema()->getTable('project'), array('project_id'), array('id'), array('onDelete' => 'CASCADE'));
+        $commentTable->addForeignKeyConstraint($schema->getTable('project'), array('project_id'), array('id'), array('onDelete' => 'CASCADE'));
     }
 
-    public function down()
+    public function getMigrationInfo()
     {
-        throw new \RuntimeException('Unsupported operation');       
+        return 'Added comment table';
     }
 }

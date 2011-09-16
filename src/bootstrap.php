@@ -102,13 +102,15 @@ $app->before(function() use ($app) {
     $app['twig']->addGlobal('username', $app['session']->get('username'));
 
     $schema    = $app['db']->getSchemaManager()->createSchema();
-    $migration = new Marketplace\Migration($schema, $app['db']);
+    $migration = new Marketplace\Migration($app, $schema);
 
     if (!$migration->hasVersionInfo()) {
         $migration->createVersionInfo();
     }
 
-    $migration->migrate();
+    if (true === $migration->migrate()) {
+        $app['twig']->addGlobal('migration_infos', $migration->getMigrationInfos());
+    }
 });
 
 return $app;
