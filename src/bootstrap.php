@@ -49,6 +49,16 @@ $app->register(new DoctrineExtension(), array(
     'db.common.class_path'  => __DIR__.'/../vendor/doctrine-common/lib',
 ));
 
+$app['hydrate'] = $app->share(function() {
+    return function($entity, $data) {
+        foreach ($data as $key => $value) {
+            $entity->$key = $value;
+        }
+
+        return $entity;
+    };
+});
+
 $app->register(new TranslationExtension(), array(
   'translator.messages' => array()
 ));

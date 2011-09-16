@@ -11,7 +11,7 @@
         <form method="post" action="{{ path('project_delete', { 'id': project.id }) }}">
         <div class="actions">
             <p>This project is yours. You have the powerz!</p>
-            <a class="btn" href="">Edit</a>
+            <a class="btn" href="{{ path('project_edit', { 'id': project.id }) }}">Edit</a>
             <button type="submit" class="btn">Delete</button>
         </div>
         </form>

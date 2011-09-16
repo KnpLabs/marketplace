@@ -52,6 +52,44 @@ $app->post('/project/{id}/delete', function($id) use ($app) {
 })->bind('project_delete');
 
 /**
+ * Shows the edit form for a project
+ */
+$app->get('/project/{id}/edit', function($id) use ($app) {
+    $project = $app['hydrate'](new Entity\Project(), $app['db']->fetchAssoc('SELECT * FROM project WHERE id = ?', array($id)));
+    $form    = $app['form.factory']->create(new Form\ProjectType(), $project);
+
+    return $app['twig']->render('Project/edit.html.twig', array(
+        'form'    => $form->createView(),
+        'project' => $project
+    ));
+
+})->bind('project_edit');
+
+/**
+ * Actually updates a project
+ */
+$app->post('/project/{id}', function($id) use ($app) {
+    $project = $app['hydrate'](new Entity\Project(), $app['db']->fetchAssoc('SELECT * FROM project WHERE id = ?', array($id)));
+    $form    = $app['form.factory']->create(new Form\ProjectType(), $project);
+
+    $form->bindRequest($app['request']);
+
+    if ($form->isValid()) {
+        $project = $form->getData();
+        $project->id = $id;
+
+        $app['db']->update('project', (array) $project, array('id' => $id));
+
+        return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
+    }
+
+    return $app['twig']->render('Project/edit.twig.html', array(
+        'form'    => $form->createView(),
+        'project' => $project,
+    ));
+})->bind('project_update');
+
+/**
  * Project creation form
  */
 $app->get('/project/new', function() use ($app) {

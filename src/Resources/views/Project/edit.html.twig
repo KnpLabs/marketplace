@@ -1,0 +1,18 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Edit project "{{ project.name }}"</h1>
+</div>
+
+<form method="post" action="{{ path('project_update', { 'id': project.id }) }}">
+  
+  {% include "Project/_form.twig.html" %}
+
+  <div class="actions">
+    <button class="btn primary">Update project</button>
+    <a class="btn" href="{{ path('project_show', { 'id': project.id }) }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

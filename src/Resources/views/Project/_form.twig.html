@@ -1,0 +1,21 @@
+  {{ form_errors(form) }}
+
+  <fieldset>
+    <div class="clearfix">
+      {{ form_label(form.name) }}
+      {{ form_errors(form.name) }}
+      <div class="input">
+        {{ form_widget(form.name, { 'attr': {'class': 'xlarge'} }) }}
+      </div>
+    </div>
+
+    <div class="clearfix">
+      {{ form_label(form.description) }}
+      {{ form_errors(form.description) }}
+      <div class="input">
+        {{ form_widget(form.description, { 'attr': {'class': 'xlarge'} }) }}
+      </div>
+    </div>
+  </fieldset>
+
+  {{ form_rest(form) }}
