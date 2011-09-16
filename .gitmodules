@@ -22,3 +22,6 @@
 [submodule "vendor/lightopenid"]
 	path = vendor/lightopenid
 	url = git://gitorious.org/lightopenid/lightopenid.git
+[submodule "vendor/SilexDiscountExtension"]
+	path = vendor/SilexDiscountExtension
+	url = git@github.com:geoffrey/SilexDiscountExtension.git

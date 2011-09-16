@@ -5,7 +5,7 @@
         <h1>{{ project.name }} <small>by {{ project.username }}</small></h1>
     </div>
 
-    <p>{{ project.description }}</p>
+    <p>{{ project.description|markdown }}</p>
 
     <h2>
         Comments
@@ -16,7 +16,7 @@
 
     {% for comment in comments %}
         <blockquote>
-            <p>{{ comment.content }}</p>
+            <p>{{ comment.content|markdown }}</p>
             <small>{{ comment.username }}</small>
         </blockquote>
     {% endfor %}

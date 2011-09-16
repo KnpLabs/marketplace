@@ -10,6 +10,7 @@ $app['autoloader']->registerNamespaces(array(
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
     'Form'             => __DIR__,
     'Entity'           => __DIR__,
+    'Panda'            => array(__DIR__.'/../vendor/SilexDiscountExtension/src'),
 ));
 
 use Silex\Extension\SymfonyBridgesExtension;
@@ -20,6 +21,7 @@ use Silex\Extension\DoctrineExtension;
 use Silex\Extension\TranslationExtension;
 use Silex\Extension\ValidatorExtension;
 use Silex\Extension\SessionExtension;
+use Panda\DiscountExtension;
 
 use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
@@ -30,6 +32,7 @@ $app->register(new SymfonyBridgesExtension());
 $app->register(new UrlGeneratorExtension());
 $app->register(new SessionExtension());
 $app->register(new FormExtension());
+$app->register(new DiscountExtension());
 
 $app->register(new ValidatorExtension());
 
