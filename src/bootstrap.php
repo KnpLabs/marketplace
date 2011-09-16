@@ -11,6 +11,7 @@ $app['autoloader']->registerNamespaces(array(
     'Form'             => __DIR__,
     'Entity'           => __DIR__,
     'Panda'            => array(__DIR__.'/../vendor/SilexDiscountExtension/src'),
+    'Marketplace'      => __DIR__,
 ));
 
 use Silex\Extension\SymfonyBridgesExtension;
@@ -100,39 +101,14 @@ $app->before(function() use ($app) {
 
     $app['twig']->addGlobal('username', $app['session']->get('username'));
 
-    $manager = $app['db']->getSchemaManager();
+    $schema    = $app['db']->getSchemaManager()->createSchema();
+    $migration = new Marketplace\Migration($schema, $app['db']);
 
-    if (count($manager->listTables()) < 2) {
-        $schema = new Doctrine\DBAL\Schema\Schema();
-
-        $projectTable = $schema->createTable('project');
-        $projectTable->addColumn('id', 'integer', array(
-            'unsigned'      => true,
-            'autoincrement' => true
-        ));
-        $projectTable->addColumn('name', 'string');
-        $projectTable->addColumn('description', 'text');
-        $projectTable->addColumn('username', 'string');
-        $projectTable->setPrimaryKey(array('id'));
-        $projectTable->addUniqueIndex(array('name'));
-
-        $commentTable = $schema->createTable('comment');
-        $commentTable->addColumn('id', 'integer', array(
-            'unsigned'      => true,
-            'autoincrement' => true
-        ));
-        $commentTable->addColumn('content', 'text');
-        $commentTable->addColumn('project_id', 'integer', array('unsigned' => true));
-        $commentTable->addColumn('username', 'string');
-        $commentTable->setPrimaryKey(array('id'));
-        $commentTable->addForeignKeyConstraint($projectTable, array('project_id'), array('id'), array('onDelete' => 'CASCADE'));
-
-        $queries = $schema->toSql($app['db']->getDatabasePlatform());
-
-        foreach ($queries as $query) {
-            $app['db']->exec($query);
-        }
+    if (!$migration->hasVersionInfo()) {
+        $migration->createVersionInfo();
     }
+
+    $migration->migrate();
 });
 
 return $app;
