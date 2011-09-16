@@ -11,8 +11,8 @@
         <form method="post" action="{{ path('project_delete', { 'id': project.id }) }}">
         <div class="actions">
             <p>This project is yours. You have the powerz!</p>
-            <a class="btn" href="{{ path('project_edit', { 'id': project.id }) }}">Edit</a>
-            <button type="submit" class="btn">Delete</button>
+            <a class="btn primary small" href="{{ path('project_edit', { 'id': project.id }) }}">Edit</a>
+            <button type="submit" class="btn danger small">Delete</button>
         </div>
         </form>
     {% endif %}
@@ -37,7 +37,7 @@
         {% if comment.username == username %}
             <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
                 <div class="right-actions">
-                    <button class="btn">Delete</button>
+                    <button class="btn danger small">Delete</button>
                 </div>
             </form>
         {% endif %}
