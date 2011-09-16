@@ -9,7 +9,7 @@
 
         <div class="span-two-thirds">
 
-            <p>{{ project.description|markdown }}</p>
+            <p>{{ project.description_html|raw }}</p>
 
         </div>
 
@@ -39,7 +39,7 @@
     <div class="row">
         <div class="span-two-thirds">
             <blockquote>
-                <p>{{ comment.content|markdown }}</p>
+                <p>{{ comment.content_html|raw }}</p>
                 <small>{{ comment.username }}</small>
             </blockquote>
         </div>

@@ -17,4 +17,6 @@ class Project
      * @Assert\NotBlank()
      */
     public $description;
+
+    public $description_html;
 }

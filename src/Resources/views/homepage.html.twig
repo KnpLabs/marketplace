@@ -7,7 +7,7 @@
 
     {% for project in projects %}
         <h2><a href="{{ path('project_show', { "id": project.id }) }}">{{ project.name }}</a></h2>
-        <p>{{ project.description|markdown }}</p>
+        <p>{{ project.description_html|raw }}</p>
     {% endfor %}
 
 {% endblock %}

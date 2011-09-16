@@ -25,8 +25,9 @@ $app->get('/', function() use ($app) {
 
         unset($comment['id']);
 
-        $comment['project_id'] = $id;
-        $comment['username']   = $app['session']->get('username');
+        $comment['project_id']   = $id;
+        $comment['username']     = $app['session']->get('username');
+        $comment['content_html'] = $app['markdown']($comment['content']);
 
         $app['db']->insert('comment', $comment);
 
@@ -75,10 +76,12 @@ $app->post('/project/{id}', function($id) use ($app) {
     $form->bindRequest($app['request']);
 
     if ($form->isValid()) {
-        $project = $form->getData();
-        $project->id = $id;
+        $project = (array) $form->getData();
 
-        $app['db']->update('project', (array) $project, array('id' => $id));
+        $project['id'] = $id;
+        $project['description_html'] = $app['markdown']($project['description']);
+
+        $app['db']->update('project', $project, array('id' => $id));
 
         return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
     }
@@ -129,7 +132,8 @@ $app->post('/project', function() use ($app) {
 
         unset($project['id']);
 
-        $project['username'] = $app['session']->get('username');
+        $project['username']         = $app['session']->get('username');
+        $project['description_html'] = $app['markdown']($project['description']);
 
         $app['db']->insert('project', $project);
 

@@ -14,4 +14,6 @@ class Comment
      * @Assert\NotBlank()
      */
     public $content;
+
+    public $content_html;
 }
