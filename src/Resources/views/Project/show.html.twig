@@ -5,17 +5,28 @@
         <h1>{{ project.name }} <small>by {{ project.username }}</small></h1>
     </div>
 
-    <p>{{ project.description|markdown }}</p>
+    <div class="row">
 
-    {% if project.username == username %}
-        <form method="post" action="{{ path('project_delete', { 'id': project.id }) }}">
-        <div class="actions">
-            <p>This project is yours. You have the powerz!</p>
-            <a class="btn primary small" href="{{ path('project_edit', { 'id': project.id }) }}">Edit</a>
-            <button type="submit" class="btn danger small">Delete</button>
+        <div class="span-two-thirds">
+
+            <p>{{ project.description|markdown }}</p>
+
         </div>
-        </form>
-    {% endif %}
+
+        <div class="span-one-third">
+
+            {% if project.username == username %}
+                <form method="post" action="{{ path('project_delete', { 'id': project.id }) }}">
+                <div class="well">
+                    <button type="submit" class="btn danger">Delete</button>
+                    <a class="btn" href="{{ path('project_edit', { 'id': project.id }) }}">Edit</a>
+                </div>
+                </form>
+            {% endif %}
+
+        </div>
+
+    </div>
 
     <h2>
         Comments
@@ -26,18 +37,18 @@
 
     {% for comment in comments %}
     <div class="row">
-        <div class="span-two-thirds columns">
+        <div class="span-two-thirds">
             <blockquote>
                 <p>{{ comment.content|markdown }}</p>
                 <small>{{ comment.username }}</small>
             </blockquote>
         </div>
 
-        <div class="span-one-third columns">
+        <div class="span-one-third">
         {% if comment.username == username %}
             <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
-                <div class="right-actions">
-                    <button class="btn danger small">Delete</button>
+                <div class="well">
+                    <button class="btn danger">Delete</button>
                 </div>
             </form>
         {% endif %}
