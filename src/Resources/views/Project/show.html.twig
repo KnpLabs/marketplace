@@ -25,10 +25,25 @@
     </h2>
 
     {% for comment in comments %}
-        <blockquote>
-            <p>{{ comment.content|markdown }}</p>
-            <small>{{ comment.username }}</small>
-        </blockquote>
+    <div class="row">
+        <div class="span-two-thirds columns">
+            <blockquote>
+                <p>{{ comment.content|markdown }}</p>
+                <small>{{ comment.username }}</small>
+            </blockquote>
+        </div>
+
+        <div class="span-one-third columns">
+        {% if comment.username == username %}
+            <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
+                <div class="right-actions">
+                    <button class="btn">Delete</button>
+                </div>
+            </form>
+        {% endif %}
+        </div>
+    </div>
+
     {% endfor %}
 
     <div>

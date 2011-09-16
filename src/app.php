@@ -142,4 +142,13 @@ $app->post('/project', function() use ($app) {
 
 })->bind('project_create');
 
+/**
+ * Deletes a comment
+ */
+$app->post('/comment/{id}/delete', function($id) use ($app) {
+    $comment = $app['db']->fetchAssoc('SELECT project_id FROM comment WHERE id = ?', array($id));
+    $app['db']->delete('comment', array('id' => $id));
+    return $app->redirect($app['url_generator']->generate('project_show', array('id' => $comment['project_id'])));
+})->bind('comment_delete');
+
 return $app;
