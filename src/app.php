@@ -44,6 +44,14 @@ $app->get('/', function() use ($app) {
  })->bind('project_comment');
 
 /**
+ * Deletes a project
+ */
+$app->post('/project/{id}/delete', function($id) use ($app) {
+   $app['db']->delete('project', array('id' => $id));
+   return $app->redirect($app['url_generator']->generate('homepage'));
+})->bind('project_delete');
+
+/**
  * Project creation form
  */
 $app->get('/project/new', function() use ($app) {

@@ -7,6 +7,16 @@
 
     <p>{{ project.description|markdown }}</p>
 
+    {% if project.username == username %}
+        <form method="post" action="{{ path('project_delete', { 'id': project.id }) }}">
+        <div class="actions">
+            <p>This project is yours. You have the powerz!</p>
+            <a class="btn" href="">Edit</a>
+            <button type="submit" class="btn">Delete</button>
+        </div>
+        </form>
+    {% endif %}
+
     <h2>
         Comments
         {% if comments|length %}
