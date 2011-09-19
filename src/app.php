@@ -6,7 +6,7 @@ $app = require_once __DIR__.'/bootstrap.php';
  * Homepage, lists recent projects
  */
 $app->get('/', function() use ($app) {
-    $projects = $app['db']->fetchAll('SELECT * FROM project ORDER BY id DESC LIMIT 5');
+    $projects = $app['db']->fetchAll('SELECT * FROM project ORDER BY id DESC');
 
     return $app['twig']->render('homepage.html.twig', array(
         'projects' => $projects,
