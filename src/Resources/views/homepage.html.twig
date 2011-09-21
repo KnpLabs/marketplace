@@ -6,7 +6,18 @@
     </div>
 
     {% for project in projects %}
-        <h2><a href="{{ path('project_show', { "id": project.id }) }}">{{ project.name }}</a></h2>
+        <h2>
+            <a href="{{ path('project_show', { "id": project.id }) }}">{{ project.name }}</a>
+            <small>
+                {% if project.comments == 0 %}
+                    no comments
+                {% elseif project.comments == 1 %}
+                    1 comment
+                {% else %}
+                    {{ project.comments }} comments
+                {% endif %}
+            </small>
+        </h2>
         <p>{{ project.description_html|raw }}</p>
     {% endfor %}
 
