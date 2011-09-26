@@ -13,6 +13,12 @@ $app->get('/', function() use ($app) {
     ));
 })->bind('homepage');
 
+$app->get('logout', function() use ($app) {
+    $app['session']->remove('username');
+
+    return $app->redirect($app['url_generator']->generate('homepage'));
+})->bind('logout');
+
 /**
  * Adds a comment to a project
  */
