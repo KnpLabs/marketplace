@@ -29,6 +29,8 @@ use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
+use Symfony\Component\HttpFoundation\Response;
+
 $app->register(new SymfonyBridgesExtension());
 $app->register(new UrlGeneratorExtension());
 $app->register(new SessionExtension());
@@ -80,6 +82,10 @@ $app->before(function() use ($app) {
 
     $app['session']->start();
 
+    if ($app['request']->get('_route') == 'logout') {
+        return;
+    }
+
     if (!$app['session']->has('username')) {
         $openid = new LightOpenID($_SERVER['SERVER_NAME']);
 
@@ -96,7 +102,7 @@ $app->before(function() use ($app) {
     }
 
     if (isset($app['auth']) && !$app['auth']($app['session']->get('username'))) {
-        die('You are not authorized');
+        return new Response($app['twig']->render('forbidden.html.twig'), 403);
     }
 
     $app['twig']->addGlobal('username', $app['session']->get('username'));
