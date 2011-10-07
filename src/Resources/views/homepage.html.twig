@@ -17,6 +17,18 @@
                     {{ project.comments }} comments
                 {% endif %}
             </small>
+            <small>
+                {% if project.votes == 0 %}
+                    no votes
+                {% elseif project.votes == 1 %}
+                    1 vote
+                {% else %}
+                    {{ project.votes }} votes
+                {% endif %}
+            </small>
+            {% if project.has_voted == 0 %}
+                <small><a href="{{ path('project_vote', { "id": project.id }) }}">vote for it!</a></small>
+            {% endif %}
         </h2>
         <p>{{ project.description_html|raw }}</p>
     {% endfor %}

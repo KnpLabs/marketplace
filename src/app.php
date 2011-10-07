@@ -6,7 +6,27 @@ $app = require_once __DIR__.'/bootstrap.php';
  * Homepage, lists recent projects
  */
 $app->get('/', function() use ($app) {
-    $projects = $app['db']->fetchAll('SELECT p.*, COUNT(c.id) as comments FROM project p LEFT JOIN comment c ON c.project_id = p.id GROUP BY p.id ORDER BY id DESC');
+    $sql = <<<____SQL
+        SELECT
+            p.*,
+            COUNT(c.id) AS comments,
+            (SELECT COUNT(v.id)
+                FROM project_vote AS v
+                WHERE project_id = p.id
+            ) AS votes,
+            (SELECT COUNT(mv.id)
+                FROM project_vote AS mv
+                WHERE project_id = p.id
+                   AND mv.username = ?
+                LIMIT 1
+            ) AS has_voted
+        FROM project AS p
+        LEFT JOIN comment AS c ON c.project_id = p.id
+        GROUP BY p.id ORDER BY votes DESC
+____SQL;
+
+    $projects = $app['db']->fetchAll($sql, array($app['session']->get('username')));
+    //$projects = $app['db']->fetchAll('SELECT p.*, COUNT(c.id) as comments FROM project p LEFT JOIN comment c ON c.project_id = p.id GROUP BY p.id ORDER BY id DESC');
 
     return $app['twig']->render('homepage.html.twig', array(
         'projects' => $projects,
@@ -160,5 +180,30 @@ $app->post('/comment/{id}/delete', function($id) use ($app) {
     $app['db']->delete('comment', array('id' => $id));
     return $app->redirect($app['url_generator']->generate('project_show', array('id' => $comment['project_id'])));
 })->bind('comment_delete');
+
+/**
+ * Vote for project
+ */
+$app->get('/project/{id}/vote', function($id) use ($app) {
+    $username = $app['session']->get('username');
+
+    $sql = <<<____SQL
+        SELECT id
+        FROM project_vote
+        WHERE username = ?
+            AND project_id = ?
+        LIMIT 1
+____SQL;
+
+    $exists = $app['db']->fetchColumn($sql, array($username, $id));
+    if (!$exists) {
+        $vote = array();
+        $vote['username'] = $username;
+        $vote['project_id'] = $id;
+        $app['db']->insert('project_vote', $vote);
+    }
+
+    return $app->redirect('/');
+})->bind('project_vote');
 
 return $app;
