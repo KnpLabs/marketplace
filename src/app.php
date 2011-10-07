@@ -26,11 +26,12 @@ $app->get('/', function() use ($app) {
                 WHERE c.project_id = p.id
             ) AS comments
         FROM project AS p
-        GROUP BY p.id ORDER BY votes DESC
 ____SQL;
 
     $projects = $app['db']->fetchAll($sql, array($app['session']->get('username')));
-    //$projects = $app['db']->fetchAll('SELECT p.*, COUNT(c.id) as comments FROM project p LEFT JOIN comment c ON c.project_id = p.id GROUP BY p.id ORDER BY id DESC');
+    usort($projects, function($a, $b) {
+        return $b['votes'] - $a['votes'];
+    });
 
     return $app['twig']->render('homepage.html.twig', array(
         'projects' => $projects,
