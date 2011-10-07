@@ -212,10 +212,13 @@ $app->get('/project/{id}/vote', function($id) use ($app) {
     $username = $app['session']->get('username');
 
     $sql = <<<____SQL
-        SELECT id
-        FROM project_vote
-        WHERE username = ?
-            AND project_id = ?
+        SELECT v.id
+        FROM project_vote AS v
+        INNER JOIN project AS p ON p.id = v.project_id
+        WHERE
+            ((v.username = ? AND v.project_id = ?)
+                 OR (v.username = p.username)
+            )
         LIMIT 1
 ____SQL;
 
@@ -226,7 +229,7 @@ ____SQL;
         $vote['project_id'] = $id;
         $app['db']->insert('project_vote', $vote);
     }
-    
+
     return $app->redirect(urldecode($app['request']->query->get('return_url', '/')));
 })->bind('project_vote');
 
