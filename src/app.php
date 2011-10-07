@@ -133,14 +133,30 @@ $app->get('/project/new', function() use ($app) {
  * Project show
  */
 $app->get('/project/{id}', function($id) use ($app) {
-    $project  = $app['db']->fetchAssoc('SELECT * FROM project WHERE id = ?', array($id));
+    $sql = <<<____SQL
+        SELECT
+            p.*,
+            (SELECT COUNT(mv.id)
+                FROM project_vote AS mv
+                WHERE project_id = p.id
+                   AND mv.username = ?
+                LIMIT 1
+            ) AS has_voted
+        FROM project AS p
+        WHERE p.id = ?
+        LIMIT 1
+____SQL;
+
+    $project  = $app['db']->fetchAssoc($sql, array($app['session']->get('username'), $id));
     $comments = $app['db']->fetchAll('SELECT * FROM comment WHERE project_id = ?', array($id));
+    $voters   = $app['db']->fetchAll('SELECT username FROM project_vote WHERE project_id = ?', array($id));
     $form     = $app['form.factory']->create(new Form\CommentType(), new Entity\Comment());
 
     return $app['twig']->render('Project/show.html.twig', array(
         'form'     => $form->createView(),
         'project'  => $project,
         'comments' => $comments,
+        'voters'   => $voters,
     ));
 })->bind('project_show');
 
@@ -202,8 +218,8 @@ ____SQL;
         $vote['project_id'] = $id;
         $app['db']->insert('project_vote', $vote);
     }
-
-    return $app->redirect('/');
+    
+    return $app->redirect(urldecode($app['request']->query->get('return_url', '/')));
 })->bind('project_vote');
 
 return $app;

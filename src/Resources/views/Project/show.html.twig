@@ -28,55 +28,80 @@
 
     </div>
 
-    <h2 id="comments">
-        Comments
-        {% if comments|length %}
-        <small>{{ comments|length }} of them</small>
-        {% endif %}
-    </h2>
-
-    {% for comment in comments %}
     <div class="row">
-        <div class="span-two-thirds">
-            <blockquote>
-                <p>{{ comment.content_html|raw }}</p>
-                <small>{{ comment.username }}</small>
-            </blockquote>
-        </div>
 
-        <div class="span-one-third">
-        {% if comment.username == username %}
-            <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
-                <div class="well">
-                    <button class="btn danger">Delete</button>
+        <div class="span8">
+
+            <h2 id="comments">
+                Comments
+                {% if comments|length %}
+                <small>{{ comments|length }} of them</small>
+                {% endif %}
+            </h2>
+
+            {% for comment in comments %}
+            <div class="row">
+                <div class="span-two-thirds">
+                    <blockquote>
+                        <p>{{ comment.content_html|raw }}</p>
+                        <small>{{ comment.username }}</small>
+                    </blockquote>
                 </div>
-            </form>
-        {% endif %}
-        </div>
-    </div>
 
-    {% endfor %}
-
-    <div>
-        <form method="post" action="{{ path('project_comment', { "id": project.id }) }}">
-
-            {{ form_errors(form) }}
-            
-            <fieldset>
-                <div class="clearfix">
-                    {{ form_label(form.content) }}
-                    {{ form_errors(form.content) }}
-                    <div class="input">
-                        {{ form_widget(form.content, { "attr": { "class": "xlarge" } }) }}
-                    </div>
+                <div class="span-one-third">
+                {% if comment.username == username %}
+                    <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
+                        <div class="well">
+                            <button class="btn danger">Delete</button>
+                        </div>
+                    </form>
+                {% endif %}
                 </div>
-            </fieldset>
-
-          {{ form_rest(form) }}
-
-            <div class="actions">
-                <button class="btn primary">Post comment</button>
             </div>
-        </form>
-    </div>
+
+            {% endfor %}
+
+            <div>
+                <form method="post" action="{{ path('project_comment', { "id": project.id }) }}">
+
+                    {{ form_errors(form) }}
+                    
+                    <fieldset>
+                        <div class="clearfix">
+                            {{ form_label(form.content) }}
+                            {{ form_errors(form.content) }}
+                            <div class="input">
+                                {{ form_widget(form.content, { "attr": { "class": "xlarge" } }) }}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                  {{ form_rest(form) }}
+
+                    <div class="actions">
+                        <button class="btn primary">Post comment</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="span8">
+            <h2 id="voters">
+                Voters
+                {% if not project.has_voted %}
+                <small><a href="{{ path("project_vote", { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">vote for it!</a></small>
+                {% endif %}
+            </h2>
+
+            {% if voters %}
+            <ul>
+            {% for voter in voters %}
+                <li>{{ voter.username }}</li>
+            {% endfor %}
+            </ul>
+            {% else %}
+                <p>Nobody voted for this project yet :-(</p>
+            {% endif %}
+        </div>
 {% endblock %}
