@@ -30,6 +30,9 @@ ____SQL;
 
     $projects = $app['db']->fetchAll($sql, array($app['session']->get('username')));
     usort($projects, function($a, $b) {
+        if ($b['votes'] == $a['votes']) {
+            return $b['id'] - $a['id'];
+        }
         return $b['votes'] - $a['votes'];
     });
 
@@ -210,5 +213,23 @@ ____SQL;
 
     return $app->redirect('/');
 })->bind('project_vote');
+
+/**
+* Unvote project
+*/
+$app->get('/project/{id}/unvote', function($id) use ($app) {
+    $username = $app['session']->get('username');
+
+    $sql = <<<____SQL
+        DELETE FROM project_vote
+        WHERE username = ?
+            AND project_id = ?
+        LIMIT 1
+____SQL;
+
+    $app['db']->executeQuery($sql, array($username, $id));
+
+    return $app->redirect('/');
+})->bind('project_unvote');
 
 return $app;

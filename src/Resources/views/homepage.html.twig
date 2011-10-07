@@ -28,6 +28,8 @@
             </small>
             {% if project.has_voted == 0 %}
                 <small><a href="{{ path('project_vote', { "id": project.id }) }}">vote for it!</a></small>
+            {% else %}
+                <small><a style="color:red;" href="{{ path('project_unvote', { "id": project.id }) }}">unvote</a></small>
             {% endif %}
         </h2>
         <p>{{ project.description_html|raw }}</p>
