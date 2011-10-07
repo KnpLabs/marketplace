@@ -16,3 +16,7 @@ div.right-actions {
 div.block-message ul {
     margin-bottom: 0px;
 }
+
+a.warning {
+    color: red;
+}
