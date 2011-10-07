@@ -41,7 +41,19 @@ class Migration
         $finder     = clone($this->finder);
         $migrations = array();
 
-        foreach ($finder->files()->name('*Migration.php')->in(__DIR__.'/../Resources/migrations') as $migration) {
+        $finder
+            ->files()
+            ->name('*Migration.php')
+            ->in(__DIR__.'/../Resources/migrations')
+            ->sort(function ($a, $b) {
+                if ($a != $b) {
+                    return $a > $b ? 1 : -1;
+                }
+                return 0;
+            })
+        ;
+
+        foreach ($finder as $migration) {
             if (preg_match('/^(\d+)_(.*Migration).php$/', basename($migration), $matches)) {
 
                 list(, $version, $class) = $matches;

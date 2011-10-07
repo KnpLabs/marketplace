@@ -1,0 +1,24 @@
+<?php
+
+// application debug mode
+$app['debug'] = true;
+
+// database
+$app['db.options'] = array(
+    'driver' => 'pdo_sqlite',
+    'path' => __DIR__.'/../cache/app.db',
+);
+
+// If you don't want to install discount, you can override the service with a dummy one:
+$app['markdown'] = $app->share(function() {
+    return function ($string) {
+        return $string;
+    };
+});
+
+// The ``auth`` service is useful only in production, where people not from KnpLabs should not gain access ;)
+$app['auth'] = $app->share(function() use ($app) {
+    return function($username) use ($app) {
+        return (bool) preg_match('/@knplabs\.com$/', $username);
+    };
+});
