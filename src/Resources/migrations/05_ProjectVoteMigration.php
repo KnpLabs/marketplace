@@ -17,6 +17,7 @@ class ProjectVoteMigration extends AbstractMigration
         $projectVoteTable->addColumn('project_id', 'integer', array('unsigned' => true));
         $projectVoteTable->addColumn('username', 'string');
         $projectVoteTable->setPrimaryKey(array('id'));
+        $projectVoteTable->addUniqueIndex(array('username'));
         $projectVoteTable->addForeignKeyConstraint($schema->getTable('project'), array('project_id'), array('id'), array('onDelete' => 'CASCADE'));
     }
 

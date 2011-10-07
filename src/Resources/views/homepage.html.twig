@@ -17,6 +17,7 @@
                     {{ project.comments }} comments
                 {% endif %}
                 /
+                
                 {% if project.votes == 0 %}
                     no votes
                 {% elseif project.votes == 1 %}
@@ -24,10 +25,13 @@
                 {% else %}
                     {{ project.votes }} votes
                 {% endif %}
+
+                {% if project.has_voted == 0 %}
+                    <a href="{{ path('project_vote', { "id": project.id }) }}">vote for it!</a></small>
+                {% else %}
+                    <a style="color:red;" href="{{ path('project_unvote', { "id": project.id }) }}">unvote</a>
+                {% endif %}
             </small>
-            {% if project.has_voted == 0 %}
-                <small>(<a href="{{ path('project_vote', { "id": project.id }) }}">vote for it!</a>)</small>
-            {% endif %}
         </h2>
         <p>{{ project.description_html|raw }}</p>
     {% endfor %}
