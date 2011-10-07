@@ -45,12 +45,7 @@ class Migration
             ->files()
             ->name('*Migration.php')
             ->in(__DIR__.'/../Resources/migrations')
-            ->sort(function ($a, $b) {
-                if ($a != $b) {
-                    return $a > $b ? 1 : -1;
-                }
-                return 0;
-            })
+            ->sortByName()
         ;
 
         foreach ($finder as $migration) {
