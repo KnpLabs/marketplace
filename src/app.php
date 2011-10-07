@@ -215,14 +215,12 @@ $app->get('/project/{id}/vote', function($id) use ($app) {
         SELECT v.id
         FROM project_vote AS v
         INNER JOIN project AS p ON p.id = v.project_id
-        WHERE
-            ((v.username = ? AND v.project_id = ?)
-                 OR (v.username = p.username)
-            )
+        WHERE v.project_id = ?
+            AND (v.username = ? OR v.username = p.username)
         LIMIT 1
 ____SQL;
 
-    $exists = $app['db']->fetchColumn($sql, array($username, $id));
+    $exists = $app['db']->fetchColumn($sql, array($id, $username));
     if (!$exists) {
         $vote = array();
         $vote['username'] = $username;
