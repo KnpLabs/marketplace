@@ -1,3 +1,2 @@
 src/config.php
 cache/*
-!cache/empty
