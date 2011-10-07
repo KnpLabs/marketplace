@@ -245,7 +245,7 @@ ____SQL;
 
     $app['db']->executeQuery($sql, array($username, $id));
 
-    return $app->redirect('/');
+    return $app->redirect(urldecode($app['request']->query->get('return_url', '/')));
 })->bind('project_unvote');
 
 return $app;
