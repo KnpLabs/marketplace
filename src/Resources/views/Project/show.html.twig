@@ -41,7 +41,7 @@
 
             {% for comment in comments %}
                 <h3 id="comment-{{ comment.id }}">
-                    By {{ comment.username | username }}
+                    {{ comment.username | username }}<small> {{ comment.created_at | date('r')}}</small>
                 </h3>
 
                 <p>{{ comment.content_html | raw }}</p>
