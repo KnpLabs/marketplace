@@ -147,24 +147,26 @@ $app->get('/project/new', function() use ($app) {
 /**
  * Project show
  */
-$app->get('/project/{id}', function($id) use ($app) {
-    $project  = $app['projects']->findWithHasVoted($id, $app['session']->get('username'));
-    $comments = $app['comments']->findByProjectId($id);
-    $voters   = $app['project_votes']->findByProjectId($id);
-    $links    = $app['project_links']->findByProjectId($id);
+$app->get('/project/{id}/{allComments}', function($id, $allComments = false) use ($app) {
+    $project    = $app['projects']->findWithHasVoted($id, $app['session']->get('username'));
+    $comments   = $app['comments']->findByProjectId($id, $allComments ? 0 : 5);
+    $nbComments = $app['comments']->countByProjectId($id);
+    $voters     = $app['project_votes']->findByProjectId($id);
+    $links      = $app['project_links']->findByProjectId($id);
 
-    $form     = $app['form.factory']->create(new Form\CommentType(), new Entity\Comment());
-    $linkForm = $app['form.factory']->create(new Form\ProjectLinkType(), new Entity\ProjectLink());
+    $form       = $app['form.factory']->create(new Form\CommentType(), new Entity\Comment());
+    $linkForm   = $app['form.factory']->create(new Form\ProjectLinkType(), new Entity\ProjectLink());
 
     return $app['twig']->render('Project/show.html.twig', array(
-        'form'      => $form->createView(),
-        'link_form' => $linkForm->createView(),
-        'project'   => $project,
-        'comments'  => $comments,
-        'voters'    => $voters,
-        'links'     => $links,
+        'form'             => $form->createView(),
+        'link_form'        => $linkForm->createView(),
+        'project'          => $project,
+        'comments'         => $comments,
+        'skipped_comments' => $nbComments - count($comments),
+        'voters'           => $voters,
+        'links'            => $links,
     ));
-})->bind('project_show');
+})->bind('project_show')->value('allComments', false);
 
 /**
  * Project creation

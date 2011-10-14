@@ -5,6 +5,12 @@
                 {% endif %}
             </h2>
 
+            {% if skipped_comments > 0 %}
+            <div class="alert-message warning">
+                <p>Skipped {{ skipped_comments }} comment{% if skipped_comments > 1 %}s{% endif %} (<a href="{{ path('project_show', { 'id': project.id, 'allComments': true }) }}">view all comments</a>)</p>
+            </div>
+            {% endif %}
+
             {% for comment in comments %}
                 <h3 id="comment-{{ comment.id }}">
                     {{ comment.username | username }}<small> on {{ comment.created_at | date('D, d M — H:i')}}</small>

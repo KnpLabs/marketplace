@@ -11,9 +11,22 @@ class Comment extends Repository
         return 'comment';
     }
 
-    public function findByProjectId($id)
+    public function countByProjectId($id)
     {
-        return $this->db->fetchAll('SELECT * FROM comment WHERE project_id = ?', array($id));
+        return $this->db->fetchColumn('SELECT COUNT(id) FROM comment WHERE project_id = ?', array($id));
+    }
+
+    public function findByProjectId($id, $limit = 5)
+    {
+        $nbComments = $this->countByProjectId($id);
+
+        $sql = 'SELECT * FROM comment WHERE project_id = ?';
+
+        if ($limit) {
+            $sql .= sprintf(' LIMIT %d, %d', $nbComments - $limit, $limit);
+        }
+
+        return $this->db->fetchAll($sql, array($id));
     }
 
     public function findLatests()
