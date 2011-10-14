@@ -40,24 +40,18 @@
             </h2>
 
             {% for comment in comments %}
-            <div class="row">
-                <div class="span-two-thirds">
-                    <blockquote>
-                        <p>{{ comment.content_html|raw }}</p>
-                        <small>{{ comment.username }}</small>
-                    </blockquote>
-                </div>
+                <blockquote>
+                    <p>{{ comment.content_html|raw }}</p>
+                    <small>{{ comment.username }}</small>
+                </blockquote>
 
-                <div class="span-one-third">
                 {% if comment.username == username %}
-                    <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
-                        <div class="well">
-                            <button class="btn danger">Delete</button>
-                        </div>
-                    </form>
+                <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
+                    <div class="actions">
+                        <button class="btn danger">Delete this comment</button>
+                    </div>
+                </form>
                 {% endif %}
-                </div>
-            </div>
 
             {% endfor %}
 
