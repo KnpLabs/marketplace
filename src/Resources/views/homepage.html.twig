@@ -40,7 +40,7 @@
             <div class="page-header"><h2>Last comments</h2></div>
 
             {% for comment in comments %}
-            <h3>By {{ comment.username | username }} <small> in <a href="{{ path('project_show', { 'id': comment.project_id }) }}#comment-{{ comment.id }}">{{ comment.project_name }}</a> on {{ c.created_at | date('D, d M — H:i') }}</small></h3>
+            <h3>By {{ comment.username | username }} <small> in <a href="{{ path('project_show', { 'id': comment.project_id }) }}#comment-{{ comment.id }}">{{ comment.project_name }}</a> on {{ comment.created_at | date('D, d M — H:i') }}</small></h3>
 
             <div>
                 <img src="{{ gravatar(comment.username) }}" class="gravatar" />
