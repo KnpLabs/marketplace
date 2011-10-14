@@ -11,9 +11,11 @@
             </div>
             {% endif %}
 
-            {% for comment in comments %}
+            {% for key, comment in comments %}
                 <h3 id="comment-{{ comment.id }}">
-                    {{ comment.username | username }}<small> on {{ comment.created_at | date('D, d M — H:i')}}</small>
+                    <small><a href="{{ path('project_show', { 'id': project.id }) }}#comment-{{ comment.id }}">#{{ skipped_comments + key + 1 }}</a></small>
+                    {{ comment.username | username }}
+                    <small>on {{ comment.created_at | date('D, d M — H:i')}}</small>
                 </h3>
 
                 <div>
