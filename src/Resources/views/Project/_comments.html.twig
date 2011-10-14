@@ -7,7 +7,7 @@
 
             {% if skipped_comments > 0 %}
             <div class="alert-message warning">
-                <p>Skipped {{ skipped_comments }} comment{% if skipped_comments > 1 %}s{% endif %} (<a href="{{ path('project_show', { 'id': project.id, 'allComments': true }) }}">view all comments</a>)</p>
+                <p>Skipped {{ skipped_comments }} comment{% if skipped_comments > 1 %}s{% endif %} (<a href="{{ path('project_show', { 'id': project.id, 'allComments': true }) }}#comments">view all comments</a>)</p>
             </div>
             {% endif %}
 
