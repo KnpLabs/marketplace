@@ -51,7 +51,7 @@
 
                 <div class="clear"></div>
 
-                {% if false and comment.username == username %}
+                {% if comment.username == username %}
                 <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
                     <div class="actions">
                         <button class="btn danger">Delete this comment</button>
