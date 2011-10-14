@@ -2,6 +2,9 @@
 <head>
     <link href="/css/bootstrap-1.2.0.css" rel="stylesheet" type="text/css" />
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap/bootstrap-dropdown.js"></script>
+    <script type="text/javascript" src="/js/marketplace.js"></script>
     <title>Idea Marketplace</title>
 </head>
 <body>
@@ -11,9 +14,15 @@
         <div class="container">
           <h3><a href="{{ path('homepage') }}">Idea Marketplace</a></h3>
           <ul class="nav">
-            <li><a name="username">({{ username }})</a></li>
             <li><a href="{{ path('project_new') }}">New project</a></li>
-            <li><a href="{{ path('logout') }}">Logout</a></li>
+          </ul>
+          <ul class="nav secondary-nav">
+            <li data-dropdown="dropdown">
+              <a href="#" class="dropdown-toggle" name="username">{{ username }}</a>
+              <ul class="dropdown-menu">
+                <li><a href="{{ path('logout') }}">Logout</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
