@@ -10,6 +10,7 @@ $app['autoloader']->registerNamespaces(array(
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
     'Form'             => __DIR__,
     'Entity'           => __DIR__,
+    'Repository'       => __DIR__,
     'Panda'            => array(__DIR__.'/../vendor/SilexDiscountExtension/src'),
     'Marketplace'      => __DIR__,
 ));
@@ -83,9 +84,9 @@ $app->register(new TwigExtension(), array(
 /** Register data repositories */
 
 $dataRepositories = array(
-    'projects'      => 'Marketplace\\Repository\\Project',
-    'comments'      => 'Marketplace\\Repository\\Comment',
-    'project_votes' => 'Marketplace\\Repository\\ProjectVote',
+    'projects'      => 'Repository\\Project',
+    'comments'      => 'Repository\\Comment',
+    'project_votes' => 'Repository\\ProjectVote',
 );
 
 foreach ($dataRepositories as $label => $class) {
