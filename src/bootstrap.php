@@ -75,18 +75,15 @@ $app->register(new TwigExtension(), array(
 ));
 
 /** Register data repositories */
-use Marketplace\Repository\Project as ProjectRepository,
-    Marketplace\Repository\Comment as CommentRepository,
-    Marketplace\Repository\ProjectVote as ProjectVoteRepository;
 
 $dataRepositories = array(
-    'projects'      => 'ProjectRepository',
-    'comments'      => 'CommentRepository',
-    'project_votes' => 'ProjectVoteRepository',
+    'projects'      => 'Marketplace\\Repository\\Project',
+    'comments'      => 'Marketplace\\Repository\\Comment',
+    'project_votes' => 'Marketplace\\Repository\\ProjectVote',
 );
 
 foreach ($dataRepositories as $label => $class) {
-    $app[$label] = $app->share(function() {
+    $app[$label] = $app->share(function() use ($class, $app) {
        return new $class($app['db']); 
     });
 }
