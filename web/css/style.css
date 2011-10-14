@@ -38,3 +38,7 @@ div.clear {
 input {
     height: auto !important;
 }
+
+.modal form {
+    margin: 0;
+}

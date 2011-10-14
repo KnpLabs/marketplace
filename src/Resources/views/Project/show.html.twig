@@ -87,7 +87,7 @@
         </div>
 
         <div class="span8">
-            <h2 id="links">Links</h2>
+            <h2 id="links">Links <small><a href="#" data-backdrop="true" data-keyboard="true" data-controls-modal="project_link_form">Add a link</a></small></h2>
 
             {% if links | length %}
             <ul>
@@ -95,40 +95,52 @@
                 <li><a href="{{ link.url }}">{{ link.label }}</a></li>
             {% endfor %}
             </ul>
+            {% else %}
+            <p>No links for this project yet</p>
             {% endif %}
 
-            <div>
+            <div id="project_link_form" class="modal fade">
+                <div class="modal-header">
+                    <a href="#" class="close">x</a>
+                    <h3>Add a project link</h3>
+                </div>
+
                 <form method="post" action="{{ path('project_link', { "id": project.id }) }}#links">
 
-                    {{ form_errors(link_form) }}
+                    <div class="modal-body">    
 
-                    <fieldset>
-                        <legend>Add a link</legend>
-                        <div class="clearfix">
-                            {{ form_label(link_form.label) }}
-                            {{ form_errors(link_form.label) }}
-                            <div class="input">
-                                {{ form_widget(link_form.label, { "attr": { "class": "xlarge" } } ) }}
+                        {{ form_errors(link_form) }}
+
+                        <fieldset>
+                            <div class="clearfix">
+                                {{ form_label(link_form.label) }}
+                                {{ form_errors(link_form.label) }}
+                                <div class="input">
+                                    {{ form_widget(link_form.label, { "attr": { "class": "xlarge" } } ) }}
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="clearfix">
-                            {{ form_label(link_form.url) }}
-                            {{ form_errors(link_form.url) }}
-                            <div class="input">
-                                {{ form_widget(link_form.url, { "attr": { "class": "xlarge" } } ) }}
+                            <div class="clearfix">
+                                {{ form_label(link_form.url) }}
+                                {{ form_errors(link_form.url) }}
+                                <div class="input">
+                                    {{ form_widget(link_form.url, { "attr": { "class": "xlarge" } } ) }}
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
+                        </fieldset>
 
-                    {{ form_rest(link_form) }}
+                        {{ form_rest(link_form) }}
 
-                    <div class="actions">
+                    </div>
+
+                    <div class="modal-footer">
                         <button class="btn primary">Add link</button>
                     </div>
 
                 </form>
+
             </div>
+
             <h2 id="voters">
                 Voters
                 <small>(
