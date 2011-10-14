@@ -40,12 +40,13 @@
             </h2>
 
             {% for comment in comments %}
-                <blockquote id="comment-{{ comment.id }}">
-                    <p>{{ comment.content_html | raw }}</p>
-                    <small>{{ comment.username }}</small>
-                </blockquote>
+                <h3 id="comment-{{ comment.id }}">
+                    By {{ comment.username }}
+                </h3>
 
-                {% if comment.username == username %}
+                <p>{{ comment.content_html | raw }}</p>
+
+                {% if false and comment.username == username %}
                 <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
                     <div class="actions">
                         <button class="btn danger">Delete this comment</button>

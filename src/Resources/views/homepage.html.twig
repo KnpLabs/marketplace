@@ -40,10 +40,9 @@
             <div class="page-header"><h2>Last comments</h2></div>
 
             {% for comment in comments %}
-            <blockquote>
-                <p>{{ comment.content_html | raw }}</p>
-                <small>{{ comment.username }} in <a href="{{ path('project_show', { 'id': comment.project_id }) }}#comment-{{ comment.id }}">{{ comment.project_name }}</a> ({{ c.created_at | date('Y-m-d H:i') }})</small>
-            </blockquote>
+            <h3>By {{ comment.username }} <small> in <a href="{{ path('project_show', { 'id': comment.project_id }) }}#comment-{{ comment.id }}">{{ comment.project_name }}</a> ({{ c.created_at | date('Y-m-d H:i') }})</small></h3>
+
+            <p>{{ comment.content_html | raw }}</p>
             {% endfor %}
         </div>
 
