@@ -40,8 +40,8 @@ $app->get('logout', function() use ($app) {
         $comment['username']     = $app['session']->get('username');
         $comment['content_html'] = $app['markdown']($comment['content']);
 
-        $app['db']->insert('comment', $comment);
-        $app['db']->update('project', array('last_commented_at' => date('Y-m-d H:i:s')), array('id' => $id));
+        $app['comments']->insert($comment);
+        $app['projects']->update(array('last_commented_at' => date('Y-m-d H:i:s')), array('id' => $id));
 
         return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
     }
@@ -60,7 +60,7 @@ $app->get('logout', function() use ($app) {
  * Deletes a project
  */
 $app->post('/project/{id}/delete', function($id) use ($app) {
-   $app['db']->delete('project', array('id' => $id));
+   $app['projects']->delete(array('id' => $id));
    return $app->redirect($app['url_generator']->generate('homepage'));
 })->bind('project_delete');
 
@@ -93,7 +93,7 @@ $app->post('/project/{id}', function($id) use ($app) {
         $project['id'] = $id;
         $project['description_html'] = $app['markdown']($project['description']);
 
-        $app['db']->update('project', $project, array('id' => $id));
+        $app['projects']->update($project, array('id' => $id));
 
         return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
     }
@@ -149,7 +149,7 @@ $app->post('/project', function() use ($app) {
         $project['username']         = $app['session']->get('username');
         $project['description_html'] = $app['markdown']($project['description']);
 
-        $app['db']->insert('project', $project);
+        $app['projects']->insert($project);
 
         return $app->redirect('/');
     }
@@ -165,7 +165,8 @@ $app->post('/project', function() use ($app) {
  */
 $app->post('/comment/{id}/delete', function($id) use ($app) {
     $comment = $app['comments']->find($id);
-    $app['db']->delete('comment', array('id' => $id));
+    $app['comments']->delete(array('id' => $id));
+
     return $app->redirect($app['url_generator']->generate('project_show', array('id' => $comment['project_id'])));
 })->bind('comment_delete');
 
@@ -174,7 +175,7 @@ $app->post('/comment/{id}/delete', function($id) use ($app) {
  */
 $app->get('/project/{id}/vote', function($id) use ($app) {
     if (!$app['project_votes']->existsForProjectAndUser($id, $app['session']->get('username'))) {
-        $app['db']->insert('project_vote', array(
+        $app['project_votes']->insert(array(
             'username'   => $username,
             'project_id' => $id,
         ));
@@ -187,7 +188,7 @@ $app->get('/project/{id}/vote', function($id) use ($app) {
 * Unvote project
 */
 $app->get('/project/{id}/unvote', function($id) use ($app) {
-    $app['db']->delete('project_vote', array(
+    $app['project_votes']->delete(array(
         'project_id' => $id,
         'username'   => $app['session']->get('username'),
     ));
