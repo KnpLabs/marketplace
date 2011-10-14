@@ -5,28 +5,16 @@
         <h1>{{ project.name }} <small>by {{ project.username | username }}</small></h1>
     </div>
 
-    <div class="row">
+    <p>{{ project.description_html|raw }}</p>
 
-        <div class="span-two-thirds">
-
-            <p>{{ project.description_html|raw }}</p>
-
+    {% if project.username == username %}
+        <form method="post" action="{{ path('project_delete', { 'id': project.id }) }}">
+        <div class="actions">
+            <button type="submit" class="btn danger">Delete</button>
+            <a class="btn" href="{{ path('project_edit', { 'id': project.id }) }}">Edit</a>
         </div>
-
-        <div class="span-one-third">
-
-            {% if project.username == username %}
-                <form method="post" action="{{ path('project_delete', { 'id': project.id }) }}">
-                <div class="well">
-                    <button type="submit" class="btn danger">Delete</button>
-                    <a class="btn" href="{{ path('project_edit', { 'id': project.id }) }}">Edit</a>
-                </div>
-                </form>
-            {% endif %}
-
-        </div>
-
-    </div>
+        </form>
+    {% endif %}
 
     <div class="row">
 
