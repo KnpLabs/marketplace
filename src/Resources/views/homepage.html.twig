@@ -27,7 +27,7 @@
                 {% endif %}
 
                 {% if project.has_voted == 0 %}
-                    (<a href="{{ path('project_vote', { "id": project.id }) }}">vote for it!</a>)
+                    ( <a href="{{ path('project_vote', { "id": project.id }) }}">+1</a> )
                 {% endif %}
             </small>
         </h2>

@@ -83,16 +83,17 @@
         <div class="span8">
             <h2 id="voters">
                 Voters
-                <small>
+                <small>(
                     {% if not project.has_voted %}
-                        <a href="{{ path("project_vote", { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">vote for it!</a>
+                        <a href="{{ path("project_vote", { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">+1</a>
                     {% else %}
-                        <a class="warning" href="{{ path('project_unvote', { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">remove my vote</a>
+                        <a class="warning" href="{{ path('project_unvote', { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">-1</a>
                     {% endif %}
-                </small>
+                )</small>
             </h2>
 
             {% if voters %}
+            <p>{{ voters | length }} people voted for this project</p>
             <ul>
             {% for voter in voters %}
                 <li>{{ voter.username }}</li>
