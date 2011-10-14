@@ -20,3 +20,7 @@ div.block-message ul {
 a.warning {
     color: red;
 }
+
+blockquote {
+    border-width: 0;
+}

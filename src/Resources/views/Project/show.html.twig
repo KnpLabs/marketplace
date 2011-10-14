@@ -40,8 +40,8 @@
             </h2>
 
             {% for comment in comments %}
-                <blockquote>
-                    <p>{{ comment.content_html|raw }}</p>
+                <blockquote id="comment-{{ comment.id }}">
+                    <p>{{ comment.content_html | raw }}</p>
                     <small>{{ comment.username }}</small>
                 </blockquote>
 

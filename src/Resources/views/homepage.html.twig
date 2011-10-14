@@ -1,36 +1,50 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-    <div class="page-header">
-        <h1>Recently added projects</h1>
-    </div>
+    <div class="row">
+        <div class="span8">
+            <div class="page-header">
+                <h2>Recently added projects</h2>
+            </div>
 
-    {% for project in projects %}
-        <h2>
-            <a href="{{ path('project_show', { "id": project.id }) }}">{{ project.name }}</a>
-            <small>
-                {% if project.comments == 0 %}
-                    no comments
-                {% elseif project.comments == 1 %}
-                    1 comment
-                {% else %}
-                    {{ project.comments }} comments
-                {% endif %}
-                /
+            {% for project in projects %}
+                <h3>
+                    <a href="{{ path('project_show', { "id": project.id }) }}">{{ project.name }}</a>
+                    <small>
+                        {% if project.comments == 0 %}
+                            no comments
+                        {% elseif project.comments == 1 %}
+                            1 comment
+                        {% else %}
+                            {{ project.comments }} comments
+                        {% endif %}
+                        /
 
-                {% if project.votes == 0 %}
-                    no votes
-                {% elseif project.votes == 1 %}
-                    1 vote
-                {% else %}
-                    {{ project.votes }} votes
-                {% endif %}
+                        {% if project.votes == 0 %}
+                            no votes
+                        {% elseif project.votes == 1 %}
+                            1 vote
+                        {% else %}
+                            {{ project.votes }} votes
+                        {% endif %}
 
-                {% if project.has_voted == 0 %}
-                    ( <a href="{{ path('project_vote', { "id": project.id }) }}">+1</a> )
-                {% endif %}
-            </small>
-        </h2>
-    {% endfor %}
+                        {% if project.has_voted == 0 %}
+                            ( <a href="{{ path('project_vote', { "id": project.id }) }}">+1</a> )
+                        {% endif %}
+                    </small>
+                </h3>
+            {% endfor %}
+        </div>
+
+        <div class="span8">
+            <div class="page-header"><h2>Last comments</h2></div>
+
+            {% for comment in comments %}
+            <blockquote>
+                <p>{{ comment.content_html | raw }}</p>
+                <small>{{ comment.username }} in <a href="{{ path('project_show', { 'id': comment.project_id }) }}#comment-{{ comment.id }}">{{ comment.project_name }}</a> ({{ c.created_at | date('Y-m-d H:i') }})</small>
+            </blockquote>
+            {% endfor %}
+        </div>
 
 {% endblock %}
