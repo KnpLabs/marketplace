@@ -1,0 +1,53 @@
+            <h2 id="links">Links <small><a href="#" data-backdrop="true" data-keyboard="true" data-controls-modal="project_link_form">Add a link</a></small></h2>
+
+            {% if links | length %}
+            <ul>
+            {% for link in links %}
+                <li><a href="{{ link.url }}">{{ link.label }}</a></li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <p>No links for this project yet</p>
+            {% endif %}
+
+            <div id="project_link_form" class="modal fade">
+                <div class="modal-header">
+                    <a href="#" class="close">x</a>
+                    <h3>Add a project link</h3>
+                </div>
+
+                <form method="post" action="{{ path('project_link', { "id": project.id }) }}#links">
+
+                    <div class="modal-body">    
+
+                        {{ form_errors(form) }}
+
+                        <fieldset>
+                            <div class="clearfix">
+                                {{ form_label(form.label) }}
+                                {{ form_errors(form.label) }}
+                                <div class="input">
+                                    {{ form_widget(form.label, { "attr": { "class": "xlarge" } } ) }}
+                                </div>
+                            </div>
+
+                            <div class="clearfix">
+                                {{ form_label(form.url) }}
+                                {{ form_errors(form.url) }}
+                                <div class="input">
+                                    {{ form_widget(form.url, { "attr": { "class": "xlarge" } } ) }}
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        {{ form_rest(form) }}
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn primary">Add link</button>
+                    </div>
+
+                </form>
+
+            </div>

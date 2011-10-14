@@ -1,0 +1,51 @@
+            <h2 id="comments">
+                Comments
+                {% if comments|length %}
+                <small>{{ comments|length }} of them</small>
+                {% endif %}
+            </h2>
+
+            {% for comment in comments %}
+                <h3 id="comment-{{ comment.id }}">
+                    {{ comment.username | username }}<small> on {{ comment.created_at | date('D, d M — H:i')}}</small>
+                </h3>
+
+                <div>
+                    <img src="{{ gravatar(comment.username) }}" class="gravatar" />
+                    {{ comment.content_html | raw }}
+                </div>
+
+                <div class="clear"></div>
+
+                {% if comment.username == username %}
+                <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
+                    <div class="actions">
+                        <button class="btn danger">Delete this comment</button>
+                    </div>
+                </form>
+                {% endif %}
+
+            {% endfor %}
+
+            <div>
+                <form method="post" action="{{ path('project_comment', { "id": project.id }) }}">
+
+                    {{ form_errors(form) }}
+                    
+                    <fieldset>
+                        <div class="clearfix">
+                            {{ form_label(form.content) }}
+                            {{ form_errors(form.content) }}
+                            <div class="input">
+                                {{ form_widget(form.content, { "attr": { "class": "xlarge" } }) }}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                  {{ form_rest(form) }}
+
+                    <div class="actions">
+                        <button class="btn primary">Post comment</button>
+                    </div>
+                </form>
+            </div>

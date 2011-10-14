@@ -1,0 +1,22 @@
+            <h2 id="voters">
+                Voters
+                <small>(
+                    {% if not project.has_voted %}
+                        <a href="{{ path("project_vote", { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">+1</a>
+                    {% else %}
+                        <a class="warning" href="{{ path('project_unvote', { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">-1</a>
+                    {% endif %}
+                )</small>
+            </h2>
+
+            {% if voters | length == 0 %}
+            <p>Nobody voted for this project</p>
+            {% elseif voters | length == 1 %}
+            <p>1 person voted for this project</p>
+            {% else %}
+            <p>{{ voters | length }} voted for this project</p>
+            {% endif %}
+
+            {% for voter in voters %}
+            <img rel="twipsy" title="{{ voter.username | username}}" data-original-title="{{ voter.username | username }}" src="{{ gravatar(voter.username) }}" class="gravatar" />
+            {% endfor %}

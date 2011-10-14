@@ -20,136 +20,15 @@
 
         <div class="span8">
 
-            <h2 id="comments">
-                Comments
-                {% if comments|length %}
-                <small>{{ comments|length }} of them</small>
-                {% endif %}
-            </h2>
-
-            {% for comment in comments %}
-                <h3 id="comment-{{ comment.id }}">
-                    {{ comment.username | username }}<small> on {{ comment.created_at | date('D, d M — H:i')}}</small>
-                </h3>
-
-                <div>
-                    <img src="{{ gravatar(comment.username) }}" class="gravatar" />
-                    {{ comment.content_html | raw }}
-                </div>
-
-                <div class="clear"></div>
-
-                {% if comment.username == username %}
-                <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">
-                    <div class="actions">
-                        <button class="btn danger">Delete this comment</button>
-                    </div>
-                </form>
-                {% endif %}
-
-            {% endfor %}
-
-            <div>
-                <form method="post" action="{{ path('project_comment', { "id": project.id }) }}">
-
-                    {{ form_errors(form) }}
-                    
-                    <fieldset>
-                        <div class="clearfix">
-                            {{ form_label(form.content) }}
-                            {{ form_errors(form.content) }}
-                            <div class="input">
-                                {{ form_widget(form.content, { "attr": { "class": "xlarge" } }) }}
-                            </div>
-                        </div>
-                    </fieldset>
-
-                  {{ form_rest(form) }}
-
-                    <div class="actions">
-                        <button class="btn primary">Post comment</button>
-                    </div>
-                </form>
-            </div>
+            {% include 'Project/_comments.html.twig' %}
 
         </div>
 
         <div class="span8">
-            <h2 id="links">Links <small><a href="#" data-backdrop="true" data-keyboard="true" data-controls-modal="project_link_form">Add a link</a></small></h2>
 
-            {% if links | length %}
-            <ul>
-            {% for link in links %}
-                <li><a href="{{ link.url }}">{{ link.label }}</a></li>
-            {% endfor %}
-            </ul>
-            {% else %}
-            <p>No links for this project yet</p>
-            {% endif %}
+            {% include 'Project/_links.html.twig' with { "form": link_form } %}
 
-            <div id="project_link_form" class="modal fade">
-                <div class="modal-header">
-                    <a href="#" class="close">x</a>
-                    <h3>Add a project link</h3>
-                </div>
+            {% include 'Project/_voters.html.twig' %}
 
-                <form method="post" action="{{ path('project_link', { "id": project.id }) }}#links">
-
-                    <div class="modal-body">    
-
-                        {{ form_errors(link_form) }}
-
-                        <fieldset>
-                            <div class="clearfix">
-                                {{ form_label(link_form.label) }}
-                                {{ form_errors(link_form.label) }}
-                                <div class="input">
-                                    {{ form_widget(link_form.label, { "attr": { "class": "xlarge" } } ) }}
-                                </div>
-                            </div>
-
-                            <div class="clearfix">
-                                {{ form_label(link_form.url) }}
-                                {{ form_errors(link_form.url) }}
-                                <div class="input">
-                                    {{ form_widget(link_form.url, { "attr": { "class": "xlarge" } } ) }}
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        {{ form_rest(link_form) }}
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="btn primary">Add link</button>
-                    </div>
-
-                </form>
-
-            </div>
-
-            <h2 id="voters">
-                Voters
-                <small>(
-                    {% if not project.has_voted %}
-                        <a href="{{ path("project_vote", { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">+1</a>
-                    {% else %}
-                        <a class="warning" href="{{ path('project_unvote', { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">-1</a>
-                    {% endif %}
-                )</small>
-            </h2>
-
-            {% if voters | length == 0 %}
-            <p>Nobody voted for this project</p>
-            {% elseif voters | length == 1 %}
-            <p>1 person voted for this project</p>
-            {% else %}
-            <p>{{ voters | length }} voted for this project</p>
-            {% endif %}
-
-            {% for voter in voters %}
-            <img rel="twipsy" title="{{ voter.username | username}}" data-original-title="{{ voter.username | username }}" src="{{ gravatar(voter.username) }}" class="gravatar" />
-            {% endfor %}
         </div>
 {% endblock %}
