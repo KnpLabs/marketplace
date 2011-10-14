@@ -14,6 +14,7 @@ $app['autoloader']->registerNamespaces(array(
     'Marketplace'      => __DIR__,
 ));
 
+/** Silex Extensions */
 use Silex\Extension\SymfonyBridgesExtension;
 use Silex\Extension\UrlGeneratorExtension;
 use Silex\Extension\TwigExtension;
@@ -24,11 +25,16 @@ use Silex\Extension\ValidatorExtension;
 use Silex\Extension\SessionExtension;
 use Panda\DiscountExtension;
 
+/** Twig Extensions */
+use Marketplace\Twig\MarketplaceExtension;
+
+/** Doctrine stuff */
 use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
+/** Symfony stuff */
 use Symfony\Component\HttpFoundation\Response;
 
 $app->register(new SymfonyBridgesExtension());
@@ -131,6 +137,9 @@ $app->before(function() use ($app) {
     if (true === $migration->migrate()) {
         $app['twig']->addGlobal('migration_infos', $migration->getMigrationInfos());
     }
+
+
+    $app['twig']->addExtension(new MarketplaceExtension());
 });
 
 return $app;
