@@ -34,3 +34,7 @@ img.gravatar {
 div.clear {
     clear: both;
 }
+
+input {
+    height: auto !important;
+}
