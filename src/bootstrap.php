@@ -8,12 +8,10 @@ $app = new Silex\Application();
 $app['autoloader']->registerNamespaces(array(
     'Symfony'          => __DIR__.'/../vendor/',
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
-    'Form'             => __DIR__,
-    'Entity'           => __DIR__,
-    'Repository'       => __DIR__,
     'Panda'            => array(__DIR__.'/../vendor/SilexDiscountExtension/src'),
-    'Marketplace'      => __DIR__,
 ));
+
+$app['autoloader']->registerNamespaceFallbacks(array(__DIR__));
 
 /** Silex Extensions */
 use Silex\Extension\SymfonyBridgesExtension;
