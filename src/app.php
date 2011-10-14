@@ -67,7 +67,7 @@ $app->get('logout', function() use ($app) {
         $comment['content_html'] = $app['markdown']($comment['content']);
 
         $app['db']->insert('comment', $comment);
-        $app['db']->update('project', array('last_commented_at' => 'NOW()'), array('id' => $id));
+        $app['db']->update('project', array('last_commented_at' => date('Y-m-d H:i:s')), array('id' => $id));
 
         return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
     }
