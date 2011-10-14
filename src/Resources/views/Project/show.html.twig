@@ -44,7 +44,12 @@
                     {{ comment.username | username }}<small> {{ comment.created_at | date('r')}}</small>
                 </h3>
 
-                <p>{{ comment.content_html | raw }}</p>
+                <div>
+                    <img src="{{ gravatar(comment.username) }}" class="gravatar" />
+                    {{ comment.content_html | raw }}
+                </div>
+
+                <div class="clear"></div>
 
                 {% if false and comment.username == username %}
                 <form method="post" action="{{ path('comment_delete', { 'id': comment.id }) }}">

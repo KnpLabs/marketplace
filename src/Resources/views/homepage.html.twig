@@ -42,7 +42,12 @@
             {% for comment in comments %}
             <h3>By {{ comment.username | username }} <small> in <a href="{{ path('project_show', { 'id': comment.project_id }) }}#comment-{{ comment.id }}">{{ comment.project_name }}</a> on {{ c.created_at | date('r') }}</small></h3>
 
-            <p>{{ comment.content_html | raw }}</p>
+            <div>
+                <img src="{{ gravatar(comment.username) }}" class="gravatar" />
+                {{ comment.content_html | raw }}
+            </div>
+
+            <div class="clear"></div>
             {% endfor %}
         </div>
 

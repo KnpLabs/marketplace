@@ -24,3 +24,13 @@ a.warning {
 blockquote {
     border-width: 0;
 }
+
+img.gravatar {
+    border: 1px solid black;
+    float: left;
+    margin: 0 1em 1em 0;
+}
+
+div.clear {
+    clear: both;
+}
