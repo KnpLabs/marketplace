@@ -87,6 +87,47 @@
         </div>
 
         <div class="span8">
+            <h2 id="links">Links</h2>
+
+            {% if links | length %}
+            <ul>
+            {% for link in links %}
+                <li><a href="{{ link.url }}">{{ link.label }}</a></li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+
+            <div>
+                <form method="post" action="{{ path('project_link', { "id": project.id }) }}#links">
+
+                    {{ form_errors(link_form) }}
+
+                    <fieldset>
+                        <div class="clearfix">
+                            {{ form_label(link_form.label) }}
+                            {{ form_errors(link_form.label) }}
+                            <div class="input">
+                                {{ form_widget(link_form.label, { "attr": { "class": "xlarge" } } ) }}
+                            </div>
+                        </div>
+
+                        <div class="clearfix">
+                            {{ form_label(link_form.url) }}
+                            {{ form_errors(link_form.url) }}
+                            <div class="input">
+                                {{ form_widget(link_form.url, { "attr": { "class": "xlarge" } } ) }}
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    {{ form_rest(link_form) }}
+
+                    <div class="actions">
+                        <button class="btn primary">Add link</button>
+                    </div>
+
+                </form>
+            </div>
             <h2 id="voters">
                 Voters
                 <small>(

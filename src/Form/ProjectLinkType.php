@@ -5,16 +5,16 @@ namespace Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class CommentType extends AbstractType
+class ProjectLinkType extends AbstractType
 {
     public function getName()
     {
-        return 'comment';
+        return 'project_link';
     }
 
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('id', 'hidden');
-        $builder->add('content', 'textarea');
+        $builder->add('label', 'text');
+        $builder->add('url', 'text');
     }
 }

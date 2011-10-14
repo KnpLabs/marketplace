@@ -85,6 +85,7 @@ $dataRepositories = array(
     'projects'      => 'Repository\\Project',
     'comments'      => 'Repository\\Comment',
     'project_votes' => 'Repository\\ProjectVote',
+    'project_links' => 'Repository\\ProjectLink',
 );
 
 foreach ($dataRepositories as $label => $class) {

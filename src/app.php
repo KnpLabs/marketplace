@@ -56,6 +56,35 @@ $app->get('logout', function() use ($app) {
     ));
  })->bind('project_comment');
 
+ /**
+  * Adds a link to a project
+  */
+$app->post('/project/{id}/link', function($id) use ($app) {
+    $form = $app['form.factory']->create(new Form\ProjectLinkType(), new Entity\ProjectLink());
+    $form->bindRequest($app['request']);
+
+    if ($form->isValid()) {
+        $projectLink = (array) $form->getData();
+
+        unset($projectLink['id']);
+
+        $projectLink['project_id'] = $id;
+
+        $app['project_links']->insert($projectLink);
+
+        return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
+    }
+
+    $project  = $app['projects']->find($id);
+    $comments = $app['comments']->findByProjectId($id);
+
+    return $app['twig']->render('Project/show.html.twig', array(
+        'form'     => $form->createView(),
+        'project'  => $project,
+        'comments' => $comments,
+    ));
+})->bind('project_link');
+
 /**
  * Deletes a project
  */
@@ -122,13 +151,18 @@ $app->get('/project/{id}', function($id) use ($app) {
     $project  = $app['projects']->findWithHasVoted($id, $app['session']->get('username'));
     $comments = $app['comments']->findByProjectId($id);
     $voters   = $app['project_votes']->findByProjectId($id);
+    $links    = $app['project_links']->findByProjectId($id);
+
     $form     = $app['form.factory']->create(new Form\CommentType(), new Entity\Comment());
+    $linkForm = $app['form.factory']->create(new Form\ProjectLinkType(), new Entity\ProjectLink());
 
     return $app['twig']->render('Project/show.html.twig', array(
-        'form'     => $form->createView(),
-        'project'  => $project,
-        'comments' => $comments,
-        'voters'   => $voters,
+        'form'      => $form->createView(),
+        'link_form' => $linkForm->createView(),
+        'project'   => $project,
+        'comments'  => $comments,
+        'voters'    => $voters,
+        'links'     => $links,
     ));
 })->bind('project_show');
 
