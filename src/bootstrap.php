@@ -74,6 +74,23 @@ $app->register(new TwigExtension(), array(
     'twig.class_path' => __DIR__.'/../vendor/silex/vendor/twig/lib',
 ));
 
+/** Register data repositories */
+use Marketplace\Repository\Project as ProjectRepository,
+    Marketplace\Repository\Comment as CommentRepository,
+    Marketplace\Repository\ProjectVote as ProjectVoteRepository;
+
+$dataRepositories = array(
+    'projects'      => 'ProjectRepository',
+    'comments'      => 'CommentRepository',
+    'project_votes' => 'ProjectVoteRepository',
+);
+
+foreach ($dataRepositories as $label => $class) {
+    $app[$label] = $app->share(function() {
+       return new $class($app['db']); 
+    });
+}
+
 if (is_readable(__DIR__.'/config.php')) {
     require_once __DIR__.'/config.php';
 }
