@@ -36,7 +36,7 @@ ____SQL;
         return $b['votes'] - $a['votes'];
     });
 
-    $comments = $app['db']->fetchAll('SELECT p.id AS project_id, p.name AS project_name, c.id, c.content_html, c.username, c.created_at FROM comment AS c JOIN project AS p on c.project_id = p.id ORDER BY c.created_at DESC LIMIT 5');
+    $comments = $app['db']->fetchAll('SELECT p.id AS project_id, p.name AS project_name, c.id, c.content_html, c.username, c.created_at FROM comment AS c JOIN project AS p on c.project_id = p.id ORDER BY c.created_at DESC, c.id DESC LIMIT 5');
 
     return $app['twig']->render('homepage.html.twig', array(
         'projects' => $projects,
