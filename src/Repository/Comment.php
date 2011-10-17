@@ -22,7 +22,7 @@ class Comment extends Repository
 
         $sql = 'SELECT * FROM comment WHERE project_id = ?';
 
-        if ($limit) {
+        if ($limit && $nbComments > $limit) {
             $sql .= sprintf(' LIMIT %d, %d', $nbComments - $limit, $limit);
         }
 
