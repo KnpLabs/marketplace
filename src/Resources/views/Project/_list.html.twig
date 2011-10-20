@@ -19,7 +19,7 @@
             {{ project.votes }} votes
         {% endif %}
 
-        {% if project.has_voted == 0 %}
+        {% if project.has_voted == 0 and project.username != username %}
             ( <a href="{{ path('project_vote', { "id": project.id }) }}">+1</a> )
         {% endif %}
     </small>

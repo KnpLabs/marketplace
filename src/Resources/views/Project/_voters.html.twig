@@ -1,5 +1,6 @@
             <h2 id="voters">
                 Voters
+                {% if project.username != username %}
                 <small>(
                     {% if not project.has_voted %}
                         <a href="{{ path("project_vote", { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">+1</a>
@@ -7,6 +8,7 @@
                         <a class="warning" href="{{ path('project_unvote', { "id": project.id }) }}?return_url={{ path('project_show', { "id": project.id }) | url_encode }}">-1</a>
                     {% endif %}
                 )</small>
+                {% endif %}
             </h2>
 
             {% if voters | length == 0 %}

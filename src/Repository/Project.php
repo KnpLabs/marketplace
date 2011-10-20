@@ -42,6 +42,7 @@ ____SQL;
                 p.id,
                 p.name,
                 p.description_html,
+                p.username,
                 (SELECT COUNT(v.id)
                     FROM project_vote AS v
                     WHERE project_id = p.id
