@@ -3,37 +3,18 @@
 {% block content %}
     <div class="row">
         <div class="span8">
+
+            <div class="page-header">
+                <h2>Last projects</h2>
+            </div>
+
+            {% include 'Project/_list.html.twig' with { "projects": lastProjects } only %}
+
             <div class="page-header">
                 <h2>Recently added projects</h2>
             </div>
 
-            {% for project in projects %}
-                <h3>
-                    <a href="{{ path('project_show', { "id": project.id }) }}">{{ project.name }}</a>
-                    <small>
-                        {% if project.comments == 0 %}
-                            no comments
-                        {% elseif project.comments == 1 %}
-                            1 comment
-                        {% else %}
-                            {{ project.comments }} comments
-                        {% endif %}
-                        /
-
-                        {% if project.votes == 0 %}
-                            no votes
-                        {% elseif project.votes == 1 %}
-                            1 vote
-                        {% else %}
-                            {{ project.votes }} votes
-                        {% endif %}
-
-                        {% if project.has_voted == 0 %}
-                            ( <a href="{{ path('project_vote', { "id": project.id }) }}">+1</a> )
-                        {% endif %}
-                    </small>
-                </h3>
-            {% endfor %}
+            {% include 'Project/_list.html.twig' with { "projects": projects } only %}
         </div>
 
         <div class="span8">

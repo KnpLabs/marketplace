@@ -6,12 +6,14 @@ $app = require_once __DIR__.'/bootstrap.php';
  * Homepage, lists recent projects
  */
 $app->get('/', function() use ($app) {
-    $projects = $app['projects']->findHomepage($app['session']->get('username'));
-    $comments = $app['comments']->findLatests();
+    $projects     = $app['projects']->findHomepage($app['session']->get('username'));
+    $lastProjects = $app['projects']->findLatests($app['session']->get('username'));
+    $comments     = $app['comments']->findLatests();
 
     return $app['twig']->render('homepage.html.twig', array(
-        'projects' => $projects,
-        'comments' => $comments,
+        'projects'     => $projects,
+        'lastProjects' => $lastProjects,
+        'comments'     => $comments,
     ));
 })->bind('homepage');
 

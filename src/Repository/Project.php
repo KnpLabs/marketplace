@@ -11,6 +11,11 @@ class Project Extends Repository
         return 'project';
     }
 
+    public function findLatests($username)
+    {
+        return $this->db->fetchAll('SELECT p.*, (SELECT COUNT(pv.id) FROM project_vote AS pv WHERE pv.project_id = p.id AND pv.username = ? LIMIT 1) AS has_voted, (SELECT COUNT(pv.id) FROM project_vote AS pv WHERE pv.project_id = p.id) AS votes FROM project AS p ORDER BY p.created_at DESC, p.id DESC LIMIT 5', array($username));
+    }
+
     public function findWithHasVoted($id, $username)
     {
         $sql = <<<____SQL
