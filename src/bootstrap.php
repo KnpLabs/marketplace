@@ -8,7 +8,7 @@ $app = new Silex\Application();
 $app['autoloader']->registerNamespaces(array(
     'Symfony'          => __DIR__.'/../vendor/',
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
-    'Panda'            => array(__DIR__.'/../vendor/SilexDiscountExtension/src'),
+    'Panda'            => array(__DIR__.'/../vendor/SilexDiscountServiceProvider/src'),
 ));
 
 $app['autoloader']->registerNamespaceFallbacks(array(__DIR__));
