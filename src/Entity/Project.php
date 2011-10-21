@@ -18,5 +18,15 @@ class Project
      */
     public $description;
 
+    /**
+     * @Assert\Choice(callback="getCategoryChoices")
+     */
+    public $category;
+
     public $description_html;
+
+    static public function getCategoryChoices()
+    {
+        return array_keys($GLOBALS['app']['project.categories']);
+    }
 }

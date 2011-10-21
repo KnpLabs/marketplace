@@ -25,3 +25,7 @@ $app['auth'] = $app->share(function() use ($app) {
         return (bool) preg_match('/@knplabs\.com$/', $username);
     };
 });
+
+$app['project.categories'] = array(
+    'none' => 'Hey there, add some categories in your config.php!',
+);

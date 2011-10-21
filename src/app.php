@@ -100,7 +100,7 @@ $app->post('/project/{id}/delete', function($id) use ($app) {
  */
 $app->get('/project/{id}/edit', function($id) use ($app) {
     $project = $app['hydrate'](new Entity\Project(), $app['projects']->find($id));
-    $form    = $app['form.factory']->create(new Form\ProjectType(), $project);
+    $form    = $app['form.factory']->create(new Form\ProjectType(), $project, array('categories' => $app['project.categories']));
 
     return $app['twig']->render('Project/edit.html.twig', array(
         'form'    => $form->createView(),
@@ -114,7 +114,7 @@ $app->get('/project/{id}/edit', function($id) use ($app) {
  */
 $app->post('/project/{id}', function($id) use ($app) {
     $project = $app['hydrate'](new Entity\Project(), $app['projects']->find($id));
-    $form    = $app['form.factory']->create(new Form\ProjectType(), $project);
+    $form    = $app['form.factory']->create(new Form\ProjectType(), $project, array('categories' => $app['project.categories']));
 
     $form->bindRequest($app['request']);
 
@@ -129,7 +129,7 @@ $app->post('/project/{id}', function($id) use ($app) {
         return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
     }
 
-    return $app['twig']->render('Project/edit.twig.html', array(
+    return $app['twig']->render('Project/edit.html.twig', array(
         'form'    => $form->createView(),
         'project' => $project,
     ));
@@ -139,7 +139,7 @@ $app->post('/project/{id}', function($id) use ($app) {
  * Project creation form
  */
 $app->get('/project/new', function() use ($app) {
-    $form = $app['form.factory']->create(new Form\ProjectType(), new Entity\Project());
+    $form = $app['form.factory']->create(new Form\ProjectType(), new Entity\Project(), array('categories' => $app['project.categories']));
 
     return $app['twig']->render('Project/new.html.twig', array(
         'form' => $form->createView(),

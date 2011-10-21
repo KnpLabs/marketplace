@@ -2,8 +2,17 @@
 
 namespace Marketplace\Twig;
 
+use Silex\Application;
+
 class MarketplaceExtension extends \Twig_Extension
 {
+    private $app;
+
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
     public function getName()
     {
         return 'marketplace';
@@ -11,7 +20,10 @@ class MarketplaceExtension extends \Twig_Extension
 
     public function getFilters()
     {
-        return array('username' => new \Twig_Filter_Method($this, 'username', array('is_safe' => array('html'))));
+        return array(
+            'username' => new \Twig_Filter_Method($this, 'username', array('is_safe' => array('html'))),
+            'category' => new \Twig_Filter_Method($this, 'category', array('is_safe' => array('html'))),
+        );
     }
 
     public function getFunctions()
@@ -31,5 +43,17 @@ class MarketplaceExtension extends \Twig_Extension
         $firstname = substr($string, 0, strpos($string, '.'));
 
         return ucfirst($firstname);
+    }
+
+    public function category($string)
+    {
+        $categories = $this->app['project.categories'];
+
+        if (!isset($categories[$string]))
+        {
+            throw new \UnexpectedValueException(sprintf('No such category "%s"', $string));
+        }
+
+        return $categories[$string];
     }
 }

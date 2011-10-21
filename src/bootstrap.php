@@ -138,8 +138,7 @@ $app->before(function() use ($app) {
         $app['twig']->addGlobal('migration_infos', $migration->getMigrationInfos());
     }
 
-
-    $app['twig']->addExtension(new MarketplaceExtension());
+    $app['twig']->addExtension(new MarketplaceExtension($app));
 });
 
 return $app;

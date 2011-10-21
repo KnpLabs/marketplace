@@ -17,5 +17,13 @@ class ProjectType extends AbstractType
         $builder->add('id', 'hidden');
         $builder->add('name', 'text');
         $builder->add('description', 'textarea');
+        $builder->add('category', 'choice', array('choices' => $options['categories']));
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array_merge($options, array(
+            'categories' => array('none' => 'No category'),
+        ));
     }
 }
