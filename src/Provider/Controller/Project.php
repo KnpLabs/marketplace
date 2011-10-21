@@ -65,13 +65,21 @@ class Project implements ControllerProviderInterface
                 return $app->redirect($app['url_generator']->generate('project_show', array('id' => $id)));
             }
 
-            $project  = $app['projects']->find($id);
-            $comments = $app['comments']->findByProjectId($id);
+            $project     = $app['projects']->find($id);
+            $comments    = $app['comments']->findByProjectId($id, 0);
+            $commentForm = $app['form.factory']->create(new Form\CommentType());
+            $voters      = $app['project_votes']->findByProjectId($id);
+            $links       = $app['project_links']->findByProjectId($id);
 
             return $app['twig']->render('Project/show.html.twig', array(
-                'form'     => $form->createView(),
-                'project'  => $project,
-                'comments' => $comments,
+                'link_form'        => $form->createView(),
+                'comment_form'     => $commentForm->createView(),
+                'project'          => $project,
+                'comments'         => $comments,
+                'skipped_comments' => 0,
+                'voters'           => $voters,
+                'links'            => $links,
+                'show_link_form'   => true,
             ));
         })->bind('project_link');
 
@@ -150,11 +158,11 @@ class Project implements ControllerProviderInterface
             $voters     = $app['project_votes']->findByProjectId($id);
             $links      = $app['project_links']->findByProjectId($id);
 
-            $form       = $app['form.factory']->create(new Form\CommentType());
-            $linkForm   = $app['form.factory']->create(new Form\ProjectLinkType());
+            $commentForm = $app['form.factory']->create(new Form\CommentType());
+            $linkForm    = $app['form.factory']->create(new Form\ProjectLinkType());
 
             return $app['twig']->render('Project/show.html.twig', array(
-                'form'             => $form->createView(),
+                'comment_form'     => $commentForm->createView(),
                 'link_form'        => $linkForm->createView(),
                 'project'          => $project,
                 'comments'         => $comments,

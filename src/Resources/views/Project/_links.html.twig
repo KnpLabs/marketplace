@@ -51,3 +51,11 @@
                 </form>
 
             </div>
+
+            {% if show_link_form is defined and show_link_form %}
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $("#project_link_form").modal({ "backdrop": true }).modal('toggle');
+                });
+            </script>
+            {% endif %}
