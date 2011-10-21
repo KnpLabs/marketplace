@@ -35,7 +35,7 @@ class Project Extends Repository
 
     public function findByCategory($category, $username)
     {
-        $sql = $this->getListQuery().' WHERE p.category = ?';
+        $sql = $this->getListQuery().' WHERE p.category = ? ORDER BY votes DESC, comments DESC, p.created_at DESC, p.id DESC';
 
         return $this->db->fetchAll($sql, array($username, $category));
     }
@@ -72,14 +72,7 @@ class Project Extends Repository
 
     public function findHomepage($username)
     {
-        $projects = $this->db->fetchAll($this->getListQuery(), array($username));
-
-        usort($projects, function($a, $b) {
-            if ($b['votes'] == $a['votes']) {
-                return $b['id'] - $a['id'];
-            }
-            return $b['votes'] - $a['votes'];
-        });
+        $projects = $this->db->fetchAll($this->getListQuery().' ORDER BY votes DESC, comments DESC, p.created_at DESC, p.id DESC', array($username));
 
         return $projects;
     }
