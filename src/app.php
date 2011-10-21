@@ -168,7 +168,7 @@ $app->get('/project/{id}/{allComments}', function($id, $allComments = false) use
         'voters'           => $voters,
         'links'            => $links,
     ));
-})->bind('project_show')->value('allComments', false);
+})->bind('project_show')->value('allComments', 0)->assert('allComments', '\d+');
 
 /**
  * Project creation
@@ -212,7 +212,9 @@ $app->post('/comment/{id}/delete', function($id) use ($app) {
  * Vote for project
  */
 $app->get('/project/{id}/vote', function($id) use ($app) {
-    if (!$app['project_votes']->existsForProjectAndUser($id, $app['session']->get('username'))) {
+    $username = $app['session']->get('username');
+    
+    if (!$app['project_votes']->existsForProjectAndUser($id, $username)) {
         $app['project_votes']->insert(array(
             'username'   => $username,
             'project_id' => $id,
