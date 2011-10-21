@@ -6,6 +6,8 @@ use Silex\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
 
+use Form;
+
 class Project implements ControllerProviderInterface
 {
     public function connect(Application $app)
@@ -16,11 +18,11 @@ class Project implements ControllerProviderInterface
          * Adds a comment to a project
          */
         $controllers->post('/{id}/comment', function($id) use ($app) {
-            $form = $app['form.factory']->create(new Form\CommentType(), new Entity\Comment());
+            $form = $app['form.factory']->create(new Form\CommentType());
             $form->bindRequest($app['request']);
 
             if ($form->isValid()) {
-                $comment = (array) $form->getData();
+                $comment = $form->getData();
 
                 unset($comment['id']);
 
@@ -48,11 +50,11 @@ class Project implements ControllerProviderInterface
           * Adds a link to a project
           */
         $controllers->post('/{id}/link', function($id) use ($app) {
-            $form = $app['form.factory']->create(new Form\ProjectLinkType(), new Entity\ProjectLink());
+            $form = $app['form.factory']->create(new Form\ProjectLinkType());
             $form->bindRequest($app['request']);
 
             if ($form->isValid()) {
-                $projectLink = (array) $form->getData();
+                $projectLink = $form->getData();
 
                 unset($projectLink['id']);
 
@@ -85,8 +87,10 @@ class Project implements ControllerProviderInterface
          * Shows the edit form for a project
          */
         $controllers->get('/{id}/edit', function($id) use ($app) {
-            $project = $app['hydrate'](new Entity\Project(), $app['projects']->find($id));
-            $form    = $app['form.factory']->create(new Form\ProjectType(), $project, array('categories' => $app['project.categories']));
+            $project = $app['projects']->find($id);
+            $form    = $app['form.factory']->create(new Form\ProjectType(), $project, array(
+                'categories' => $app['project.categories']
+            ));
 
             return $app['twig']->render('Project/edit.html.twig', array(
                 'form'    => $form->createView(),
@@ -99,13 +103,15 @@ class Project implements ControllerProviderInterface
          * Actually updates a project
          */
         $controllers->post('/{id}', function($id) use ($app) {
-            $project = $app['hydrate'](new Entity\Project(), $app['projects']->find($id));
-            $form    = $app['form.factory']->create(new Form\ProjectType(), $project, array('categories' => $app['project.categories']));
+            $project = $app['projects']->find($id);
+            $form    = $app['form.factory']->create(new Form\ProjectType(), $project, array(
+                'categories' => $app['project.categories']
+            ));
 
             $form->bindRequest($app['request']);
 
             if ($form->isValid()) {
-                $project = (array) $form->getData();
+                $project = $form->getData();
 
                 $project['id'] = $id;
                 $project['description_html'] = $app['markdown']($project['description']);
@@ -125,7 +131,9 @@ class Project implements ControllerProviderInterface
          * Project creation form
          */
         $controllers->get('/new', function() use ($app) {
-            $form = $app['form.factory']->create(new Form\ProjectType(), new Entity\Project(), array('categories' => $app['project.categories']));
+            $form = $app['form.factory']->create(new Form\ProjectType(), array(), array(
+                'categories' => $app['project.categories']
+            ));
 
             return $app['twig']->render('Project/new.html.twig', array(
                 'form' => $form->createView(),
@@ -142,8 +150,8 @@ class Project implements ControllerProviderInterface
             $voters     = $app['project_votes']->findByProjectId($id);
             $links      = $app['project_links']->findByProjectId($id);
 
-            $form       = $app['form.factory']->create(new Form\CommentType(), new Entity\Comment());
-            $linkForm   = $app['form.factory']->create(new Form\ProjectLinkType(), new Entity\ProjectLink());
+            $form       = $app['form.factory']->create(new Form\CommentType());
+            $linkForm   = $app['form.factory']->create(new Form\ProjectLinkType());
 
             return $app['twig']->render('Project/show.html.twig', array(
                 'form'             => $form->createView(),
@@ -160,13 +168,15 @@ class Project implements ControllerProviderInterface
          * Project creation
          */
         $controllers->post('', function() use ($app) {
-            $form = $app['form.factory']->create(new Form\ProjectType(), new Entity\Project());
+            $form = $app['form.factory']->create(new Form\ProjectType(), array(), array(
+                'categories' => $app['project.categories']
+            ));
 
             $form->bindRequest($app['request']);
 
             if ($form->isValid()) {
 
-                $project = (array) $form->getData();
+                $project = $form->getData();
 
                 unset($project['id']);
 
