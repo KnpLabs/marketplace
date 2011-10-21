@@ -14,15 +14,15 @@ $app['autoloader']->registerNamespaces(array(
 $app['autoloader']->registerNamespaceFallbacks(array(__DIR__));
 
 /** Silex Extensions */
-use Silex\Extension\SymfonyBridgesExtension;
-use Silex\Extension\UrlGeneratorExtension;
-use Silex\Extension\TwigExtension;
-use Silex\Extension\FormExtension;
-use Silex\Extension\DoctrineExtension;
-use Silex\Extension\TranslationExtension;
-use Silex\Extension\ValidatorExtension;
-use Silex\Extension\SessionExtension;
-use Panda\DiscountExtension;
+use Silex\Provider\SymfonyBridgesServiceProvider;
+use Silex\Provider\UrlGeneratorServiceProvider;
+use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\FormServiceProvider;
+use Silex\Provider\DoctrineServiceProvider;
+use Silex\Provider\TranslationServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
+use Silex\Provider\SessionServiceProvider;
+use Panda\DiscountServiceProvider;
 
 /** Twig Extensions */
 use Marketplace\Twig\MarketplaceExtension;
@@ -36,13 +36,13 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 /** Symfony stuff */
 use Symfony\Component\HttpFoundation\Response;
 
-$app->register(new SymfonyBridgesExtension());
-$app->register(new UrlGeneratorExtension());
-$app->register(new SessionExtension());
-$app->register(new FormExtension());
-$app->register(new DiscountExtension());
+$app->register(new SymfonyBridgesServiceProvider());
+$app->register(new UrlGeneratorServiceProvider());
+$app->register(new SessionServiceProvider());
+$app->register(new FormServiceProvider());
+$app->register(new DiscountServiceProvider());
 
-$app->register(new ValidatorExtension());
+$app->register(new ValidatorServiceProvider());
 
 $app['validator.mapping.class_metadata_factory'] = $app->share(function () use ($app) {
     return new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
@@ -52,7 +52,7 @@ AnnotationRegistry::registerLoader(function($className) {
     return class_exists($className);
 });
 
-$app->register(new DoctrineExtension(), array(
+$app->register(new DoctrineServiceProvider(), array(
     'db.dbal.class_path'    => __DIR__.'/../vendor/doctrine-dbal/lib',
     'db.common.class_path'  => __DIR__.'/../vendor/doctrine-common/lib',
 ));
@@ -67,11 +67,11 @@ $app['hydrate'] = $app->share(function() {
     };
 });
 
-$app->register(new TranslationExtension(), array(
+$app->register(new TranslationServiceProvider(), array(
   'translator.messages' => array()
 ));
 
-$app->register(new TwigExtension(), array(
+$app->register(new TwigServiceProvider(), array(
     'twig.path' => array(
         __DIR__.'/Resources/views',
         __DIR__.'/../vendor/Symfony/Bridge/Twig/Resources/views/Form',
