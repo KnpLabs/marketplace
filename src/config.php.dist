@@ -1,7 +1,7 @@
 <?php
 
 // application debug mode
-$app['debug'] = true;
+$app['debug'] = false;
 
 // database
 $app['db.options'] = array(

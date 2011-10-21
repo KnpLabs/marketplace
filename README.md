@@ -2,7 +2,7 @@
 
 ## Intro
 
-Idea market is where knp ninjas share ideas
+The Marketplace is where KNP ninjas share ideas, projects and stuff. It's built on top of [Silex](http://silex.sensiolabs.org/).
 
 ## configuration
 
