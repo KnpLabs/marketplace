@@ -28,7 +28,6 @@ use Panda\DiscountServiceProvider;
 use Provider\Service\Security as SecurityServiceProvider;
 use Provider\Service\Migration as MigrationServiceProvider;
 use Provider\Service\Repository as RepositoryServiceProvider;
-use Provider\Service\Hydrate as HydrateServiceProvider;
 
 /** Twig Extensions */
 use Marketplace\Twig\MarketplaceExtension;
