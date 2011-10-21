@@ -1,3 +1,5 @@
+{% if projects | length > 0 %}
+
 {% for project in projects %}
 <h3>
     <a href="{{ path('project_show', { "id": project.id }) }}">{{ project.name }}</a>
@@ -25,3 +27,9 @@
     </small>
 </h3>
 {% endfor %}
+
+{% else %}
+
+<p>Nothing to see here.</p>
+
+{% endif %}

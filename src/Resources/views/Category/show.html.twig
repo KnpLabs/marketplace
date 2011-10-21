@@ -1,0 +1,31 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{{ category | category }} <small>{{ projects | length }} projects</small></h1>
+    </div>
+
+    <div class="row">
+
+        <div class="span8">
+
+            <div class="page-header">
+                <h2>Last projects</h2>
+            </div>
+
+            {% include 'Project/_list.html.twig' with { "projects": lastProjects } only %}
+
+        </div>
+
+        <div class="span8">
+
+            <div class="page-header">
+                <h2>Popular projects</h2>
+            </div>
+
+            {% include 'Project/_list.html.twig' with { "projects": projects } only %}
+
+        </div>
+        
+    </div>
+{% endblock %}

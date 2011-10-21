@@ -24,6 +24,14 @@
         <div class="container">
           <h3><a href="{{ path('homepage') }}">Idea Marketplace</a></h3>
           <ul class="nav">
+            <li data-dropdown="dropdown">
+              <a href="#" class="dropdown-toggle" name="username">Categories</a>
+              <ul class="dropdown-menu">
+              {% for slug, label in categories %}
+                <li><a href="{{ path('category_show', { "slug": slug }) }}">{{ label }}</a></li>
+              {% endfor %}
+              </ul>
+            </li>
             <li><a href="{{ path('project_new') }}">New project</a></li>
           </ul>
           <ul class="nav secondary-nav">

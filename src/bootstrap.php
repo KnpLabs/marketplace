@@ -125,8 +125,6 @@ $app->before(function() use ($app) {
         return new Response($app['twig']->render('forbidden.html.twig'), 403);
     }
 
-    $app['twig']->addGlobal('username', $app['session']->get('username'));
-
     $schema    = $app['db']->getSchemaManager()->createSchema();
     $migration = new Marketplace\Migration($app, $schema);
 
@@ -138,6 +136,8 @@ $app->before(function() use ($app) {
         $app['twig']->addGlobal('migration_infos', $migration->getMigrationInfos());
     }
 
+    $app['twig']->addGlobal('username', $app['session']->get('username'));
+    $app['twig']->addGlobal('categories', $app['project.categories']);
     $app['twig']->addExtension(new MarketplaceExtension($app));
 });
 

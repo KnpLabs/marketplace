@@ -11,38 +11,11 @@ class Project Extends Repository
         return 'project';
     }
 
-    public function findLatests($username)
+    public function getListQuery()
     {
-        return $this->db->fetchAll('SELECT p.*, (SELECT COUNT(pv.id) FROM project_vote AS pv WHERE pv.project_id = p.id AND pv.username = ? LIMIT 1) AS has_voted, (SELECT COUNT(pv.id) FROM project_vote AS pv WHERE pv.project_id = p.id) AS votes FROM project AS p ORDER BY p.created_at DESC, p.id DESC LIMIT 5', array($username));
-    }
-
-    public function findWithHasVoted($id, $username)
-    {
-        $sql = <<<____SQL
-            SELECT
+        return
+            'SELECT
                 p.*,
-                (SELECT COUNT(mv.id)
-                    FROM project_vote AS mv
-                    WHERE project_id = p.id
-                       AND mv.username = ?
-                    LIMIT 1
-                ) AS has_voted
-            FROM project AS p
-            WHERE p.id = ?
-            LIMIT 1
-____SQL;
-        
-        return $this->db->fetchAssoc($sql, array($username, $id));
-    }
-
-    public function findHomepage($username)
-    {
-        $sql = <<<____SQL
-            SELECT
-                p.id,
-                p.name,
-                p.description_html,
-                p.username,
                 (SELECT COUNT(v.id)
                     FROM project_vote AS v
                     WHERE project_id = p.id
@@ -57,10 +30,49 @@ ____SQL;
                     FROM comment AS c
                     WHERE c.project_id = p.id
                 ) AS comments
-            FROM project AS p
-____SQL;
+            FROM project AS p';
+    }
 
-        $projects = $this->db->fetchAll($sql, array($username));
+    public function findByCategory($category, $username)
+    {
+        $sql = $this->getListQuery().' WHERE p.category = ?';
+
+        return $this->db->fetchAll($sql, array($username, $category));
+    }
+
+    public function findLatestsByCategory($category, $username)
+    {
+        $sql = $this->getListQuery().' WHERE p.category = ? ORDER BY p.created_at DESC, p.id DESC LIMIT 5';
+
+        return $this->db->fetchAll($sql, array($username, $category));
+    }
+
+    public function findLatests($username)
+    {
+        return $this->db->fetchAll($this->getListQuery().' ORDER BY p.created_at DESC, p.id DESC LIMIT 5', array($username));
+    }
+
+    public function findWithHasVoted($id, $username)
+    {
+        $sql = 
+            'SELECT
+                p.*,
+                (SELECT COUNT(mv.id)
+                    FROM project_vote AS mv
+                    WHERE project_id = p.id
+                       AND mv.username = ?
+                    LIMIT 1
+                ) AS has_voted
+            FROM project AS p
+            WHERE p.id = ?
+            LIMIT 1';
+        
+        return $this->db->fetchAssoc($sql, array($username, $id));
+    }
+
+    public function findHomepage($username)
+    {
+        $projects = $this->db->fetchAll($this->getListQuery(), array($username));
 
         usort($projects, function($a, $b) {
             if ($b['votes'] == $a['votes']) {

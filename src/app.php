@@ -234,4 +234,18 @@ $app->get('/project/{id}/unvote', function($id) use ($app) {
     return $app->redirect(urldecode($app['request']->query->get('return_url', '/')));
 })->bind('project_unvote');
 
+/**
+ * See projects from a specific category
+ */
+$app->get('/category/{slug}', function($slug) use ($app) {
+    $projects     = $app['projects']->findByCategory($slug, $app['session']->get('username'));
+    $lastProjects = $app['projects']->findLatestsByCategory($slug, $app['session']->get('username'));
+
+    return $app['twig']->render('Category/show.html.twig', array(
+        'projects'     => $projects,
+        'lastProjects' => $lastProjects,
+        'category'     => $slug,
+    ));
+})->bind('category_show');
+
 return $app;
