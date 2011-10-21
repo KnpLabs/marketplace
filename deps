@@ -1,0 +1,18 @@
+[silex]
+    git = https://github.com/fabpot/Silex.git
+[Symfony/Component/Form]
+    git = https://github.com/symfony/Form.git
+[Symfony/Bridge/Twig]
+    git = https://github.com/symfony/TwigBridge.git
+[Symfony/Component/Translation]
+    git = https://github.com/symfony/Translation.git
+[doctrine-dbal]
+    git = https://github.com/doctrine/dbal.git
+[doctrine-common]
+    git = https://github.com/doctrine/common.git
+[Symfony/Component/Validator]
+    git = https://github.com/symfony/Validator.git
+[lightopenid]
+    git = git://gitorious.org/lightopenid/lightopenid.git
+[SilexDiscountExtension]
+    git = git@github.com:geoffrey/SilexDiscountExtension.git
