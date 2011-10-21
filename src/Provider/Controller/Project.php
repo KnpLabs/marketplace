@@ -15,7 +15,7 @@ class Project implements ControllerProviderInterface
         /**
          * Adds a comment to a project
          */
-        $controllers->post('/project/{id}/comment', function($id) use ($app) {
+        $controllers->post('/{id}/comment', function($id) use ($app) {
             $form = $app['form.factory']->create(new Form\CommentType(), new Entity\Comment());
             $form->bindRequest($app['request']);
 
@@ -47,7 +47,7 @@ class Project implements ControllerProviderInterface
          /**
           * Adds a link to a project
           */
-        $controllers->post('/project/{id}/link', function($id) use ($app) {
+        $controllers->post('/{id}/link', function($id) use ($app) {
             $form = $app['form.factory']->create(new Form\ProjectLinkType(), new Entity\ProjectLink());
             $form->bindRequest($app['request']);
 
@@ -76,7 +76,7 @@ class Project implements ControllerProviderInterface
         /**
          * Deletes a project
          */
-        $controllers->post('/project/{id}/delete', function($id) use ($app) {
+        $controllers->post('/{id}/delete', function($id) use ($app) {
            $app['projects']->delete(array('id' => $id));
            return $app->redirect($app['url_generator']->generate('homepage'));
         })->bind('project_delete');
@@ -84,7 +84,7 @@ class Project implements ControllerProviderInterface
         /**
          * Shows the edit form for a project
          */
-        $controllers->get('/project/{id}/edit', function($id) use ($app) {
+        $controllers->get('/{id}/edit', function($id) use ($app) {
             $project = $app['hydrate'](new Entity\Project(), $app['projects']->find($id));
             $form    = $app['form.factory']->create(new Form\ProjectType(), $project, array('categories' => $app['project.categories']));
 
@@ -98,7 +98,7 @@ class Project implements ControllerProviderInterface
         /**
          * Actually updates a project
          */
-        $controllers->post('/project/{id}', function($id) use ($app) {
+        $controllers->post('/{id}', function($id) use ($app) {
             $project = $app['hydrate'](new Entity\Project(), $app['projects']->find($id));
             $form    = $app['form.factory']->create(new Form\ProjectType(), $project, array('categories' => $app['project.categories']));
 
@@ -124,7 +124,7 @@ class Project implements ControllerProviderInterface
         /**
          * Project creation form
          */
-        $controllers->get('/project/new', function() use ($app) {
+        $controllers->get('/new', function() use ($app) {
             $form = $app['form.factory']->create(new Form\ProjectType(), new Entity\Project(), array('categories' => $app['project.categories']));
 
             return $app['twig']->render('Project/new.html.twig', array(
@@ -135,7 +135,7 @@ class Project implements ControllerProviderInterface
         /**
          * Project show
          */
-        $controllers->get('/project/{id}/{allComments}', function($id, $allComments = false) use ($app) {
+        $controllers->get('/{id}/{allComments}', function($id, $allComments = false) use ($app) {
             $project    = $app['projects']->findWithHasVoted($id, $app['session']->get('username'));
             $comments   = $app['comments']->findByProjectId($id, $allComments ? 0 : 5);
             $nbComments = $app['comments']->countByProjectId($id);
@@ -159,7 +159,7 @@ class Project implements ControllerProviderInterface
         /**
          * Project creation
          */
-        $controllers->post('/project', function() use ($app) {
+        $controllers->post('', function() use ($app) {
             $form = $app['form.factory']->create(new Form\ProjectType(), new Entity\Project());
 
             $form->bindRequest($app['request']);
@@ -197,7 +197,7 @@ class Project implements ControllerProviderInterface
         /**
          * Vote for project
          */
-        $controllers->get('/project/{id}/vote', function($id) use ($app) {
+        $controllers->get('/{id}/vote', function($id) use ($app) {
             $username = $app['session']->get('username');
             
             if (!$app['project_votes']->existsForProjectAndUser($id, $username)) {
@@ -213,7 +213,7 @@ class Project implements ControllerProviderInterface
         /**
         * Unvote project
         */
-        $controllers->get('/project/{id}/unvote', function($id) use ($app) {
+        $controllers->get('/{id}/unvote', function($id) use ($app) {
             $app['project_votes']->delete(array(
                 'project_id' => $id,
                 'username'   => $app['session']->get('username'),
