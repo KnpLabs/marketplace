@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>{{ project.name }} <small>filed in {{ project.category | category }} by {{ project.username | username }}</h1>
+        <h1>{{ project.name }} <small>filed in <a href="{{ path('category_show', { "slug": project.category }) }}">{{ project.category | category }}</a> by {{ project.username | username }}</h1>
     </div>
 
     <p>{{ project.description_html|raw }}</p>
