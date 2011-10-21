@@ -9,8 +9,7 @@ Idea market is where knp ninjas share ideas
 ### Vendors:
 
 ```
-git submodule update --init && cd vendor/silex && git submodule update --init && cd ../../
-
+bin/vendors install
 ```
 
 ### create and edit your config
