@@ -33,26 +33,12 @@ use Provider\Service\Hydrate as HydrateServiceProvider;
 /** Twig Extensions */
 use Marketplace\Twig\MarketplaceExtension;
 
-/** Doctrine stuff */
-use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
-
 $app->register(new SymfonyBridgesServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new DiscountServiceProvider());
 $app->register(new ValidatorServiceProvider());
-
-$app['validator.mapping.class_metadata_factory'] = $app->share(function () use ($app) {
-    return new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-});
-
-AnnotationRegistry::registerLoader(function($className) {
-    return class_exists($className);
-});
 
 $app->register(new DoctrineServiceProvider(), array(
     'db.dbal.class_path'    => __DIR__.'/../vendor/doctrine-dbal/lib',
