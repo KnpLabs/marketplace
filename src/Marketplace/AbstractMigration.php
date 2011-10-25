@@ -18,11 +18,6 @@ abstract class AbstractMigration
         throw new RuntimeError(sprintf('Could not get version from "%"', basename($rc->getFileName())));
     }
 
-    public function getSchema()
-    {
-        return $this->schema;
-    }
-
     public function getMigrationInfo()
     {
         return null;
