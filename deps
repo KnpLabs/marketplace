@@ -15,4 +15,4 @@
 [lightopenid]
     git = git://gitorious.org/lightopenid/lightopenid.git
 [SilexDiscountServiceProvider]
-    git = git@github.com:geoffrey/SilexDiscountServiceProvider.git
+    git = https://github.com/geoffrey/SilexDiscountServiceProvider.git
