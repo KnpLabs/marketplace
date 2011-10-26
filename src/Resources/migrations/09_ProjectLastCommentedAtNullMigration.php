@@ -5,7 +5,7 @@ namespace Migration;
 use Marketplace\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
-class ProjectsLastCommentedAtNullMigration extends AbstractMigration
+class ProjectLastCommentedAtNullMigration extends AbstractMigration
 {
     public function schemaUp(Schema $schema)
     {
