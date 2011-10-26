@@ -18,6 +18,12 @@ bin/vendors install
 cp src/config.php.dist src/config.php
 ```
 
+### create a cache directory
+
+```
+mkdir cache ; chmod 777 !$
+```
+
 You're set!
 
 ## About the Marketplace
