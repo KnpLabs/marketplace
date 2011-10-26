@@ -6,25 +6,20 @@ The Marketplace is where KNP ninjas share ideas, projects and stuff. It's built 
 
 ## configuration
 
-### Vendors:
+Setting up the marketplace is a simple 3-step process:
 
 ```
+# install vendors
 bin/vendors install
-```
-
-### create and edit your config
-
-```
+# create and customize your config.php
 cp src/config.php.dist src/config.php
+# make sure the cache folder is writable
+chmod 777 cache
 ```
 
-### create a cache directory
+And you're set!
 
-```
-mkdir cache ; chmod 777 !$
-```
-
-You're set!
+Note: since the SQL schema migrations take place during the `before` hook, a simple hit on the application will initiate it.
 
 ## About the Marketplace
 
