@@ -24,9 +24,9 @@ class ProjectCommentTimestampsMigration extends AbstractMigration
     public function appUp(Application $app)
     {
         $now = date("Y-m-d H:i:s");
-        $app['db']->executeQuery('UPDATE project SET created_at = ?', array($now));
-        $app['db']->exec('UPDATE comment SET created_at = ?', array($now));
-        $app['db']->exec('UPDATE project_vote SET created_at = ?', array($now));
+        $app['db']->executeUpdate('UPDATE project SET created_at = ?', array($now));
+        $app['db']->executeUpdate('UPDATE comment SET created_at = ?', array($now));
+        $app['db']->executeUpdate('UPDATE project_vote SET created_at = ?', array($now));
 
         // I guess there's a way to do that in a single query, but I'm too limited in SQL for that :/
         foreach ($app['db']->fetchAll('SELECT project_id, MAX(created_at) AS last_commented_at FROM comment GROUP BY project_id') as $comment) {
