@@ -87,7 +87,7 @@ class Migration
     public function setCurrentVersion($version)
     {
         $this->current_version = $version;
-        $this->conn->update('schema_version', array('schema_version' => $version), array(1 => 1));
+        $this->conn->executeUpdate('UPDATE schema_version SET schema_version = ?', array($version));
     }
 
     public function hasVersionInfo()
