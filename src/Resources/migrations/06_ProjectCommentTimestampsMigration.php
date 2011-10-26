@@ -23,7 +23,7 @@ class ProjectCommentTimestampsMigration extends AbstractMigration
 
     public function appUp(Application $app)
     {
-        $now = date("Y-m-d H:i:s", time());
+        $now = date("Y-m-d H:i:s");
         $app['db']->executeQuery('UPDATE project SET created_at = ?', array($now));
         $app['db']->exec('UPDATE comment SET created_at = ?', array($now));
         $app['db']->exec('UPDATE project_vote SET created_at = ?', array($now));
