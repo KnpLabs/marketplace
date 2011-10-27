@@ -8,7 +8,7 @@ $app = new Silex\Application();
 $app['autoloader']->registerNamespaces(array(
     'Symfony'          => __DIR__.'/../vendor/',
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
-    'Panda'            => array(__DIR__.'/../vendor/SilexDiscountServiceProvider/src'),
+    'Panda'            => __DIR__.'/../vendor/SilexDiscountServiceProvider/src',
 ));
 
 $app['autoloader']->registerNamespaceFallbacks(array(__DIR__));
@@ -56,8 +56,10 @@ $app->register(new TwigServiceProvider(), array(
     'twig.class_path' => __DIR__.'/../vendor/silex/vendor/twig/lib',
 ));
 
-if (is_readable(__DIR__.'/config.php')) {
+if (file_exists(__DIR__.'/config.php')) {
     require_once __DIR__.'/config.php';
+} else {
+    throw new RuntimeException('You must define your own configuration file ("src/config.php").');
 }
 
 /** Marketplace providers */
@@ -74,9 +76,5 @@ $app->before(function() use ($app) {
     $app['twig']->addGlobal('categories', $app['project.categories']);
     $app['twig']->addExtension(new MarketplaceExtension($app));
 });
-
-if (is_readable(__DIR__.'/config.php')) {
-    require_once __DIR__.'/config.php';
-}
 
 return $app;
