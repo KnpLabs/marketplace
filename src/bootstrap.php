@@ -56,11 +56,11 @@ $app->register(new TwigServiceProvider(), array(
     'twig.class_path' => __DIR__.'/../vendor/silex/vendor/twig/lib',
 ));
 
-if (file_exists(__DIR__.'/config.php')) {
-    require_once __DIR__.'/config.php';
-} else {
-    throw new RuntimeException('You must define your own configuration file ("src/config.php").');
+if (!file_exists(__DIR__.'/config.php')) {
+    throw new RuntimeException('You must create your own configuration file ("src/config.php"). See "src/config.php.dist" for an example config file.');
 }
+
+require_once __DIR__.'/config.php';
 
 /** Marketplace providers */
 $app->register(new SecurityServiceProvider());
