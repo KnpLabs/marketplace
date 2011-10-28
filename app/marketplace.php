@@ -1,8 +1,8 @@
 <?php
 
-use Provider\Controller\Security as SecurityController;
-use Provider\Controller\Project as ProjectController;
-use Provider\Controller\Category as CategoryController;
+use Marketplace\Provider\Controller\Security as SecurityController;
+use Marketplace\Provider\Controller\Project as ProjectController;
+use Marketplace\Provider\Controller\Category as CategoryController;
 
 $app = require_once __DIR__.'/bootstrap.php';
 

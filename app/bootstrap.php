@@ -6,12 +6,11 @@ require_once __DIR__.'/../vendor/lightopenid/openid.php';
 $app = new Silex\Application();
 
 $app['autoloader']->registerNamespaces(array(
+    'Marketplace'      => __DIR__.'/../src',
     'Symfony'          => __DIR__.'/../vendor/',
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
     'Panda'            => __DIR__.'/../vendor/SilexDiscountServiceProvider/src',
 ));
-
-$app['autoloader']->registerNamespaceFallbacks(array(__DIR__.'/../src/'));
 
 /** Silex Extensions */
 use Silex\Provider\SymfonyBridgesServiceProvider;
@@ -25,9 +24,9 @@ use Silex\Provider\SessionServiceProvider;
 use Panda\DiscountServiceProvider;
 
 /** Marketplace service providers */
-use Provider\Service\Security as SecurityServiceProvider;
-use Provider\Service\Migration as MigrationServiceProvider;
-use Provider\Service\Repository as RepositoryServiceProvider;
+use Marketplace\Provider\Service\Security as SecurityServiceProvider;
+use Marketplace\Provider\Service\Migration as MigrationServiceProvider;
+use Marketplace\Provider\Service\Repository as RepositoryServiceProvider;
 
 /** Twig Extensions */
 use Marketplace\Twig\MarketplaceExtension;
@@ -66,10 +65,10 @@ require_once __DIR__.'/config.php';
 $app->register(new SecurityServiceProvider());
 $app->register(new MigrationServiceProvider());
 $app->register(new RepositoryServiceProvider(), array('repository.repositories' => array(
-    'projects'      => 'Repository\\Project',
-    'comments'      => 'Repository\\Comment',
-    'project_votes' => 'Repository\\ProjectVote',
-    'project_links' => 'Repository\\ProjectLink',
+    'projects'      => 'Marketplace\\Repository\\Project',
+    'comments'      => 'Marketplace\\Repository\\Comment',
+    'project_votes' => 'Marketplace\\Repository\\ProjectVote',
+    'project_links' => 'Marketplace\\Repository\\ProjectLink',
 )));
 
 $app->before(function() use ($app) {

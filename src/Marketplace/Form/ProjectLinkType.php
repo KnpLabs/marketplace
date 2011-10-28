@@ -1,23 +1,23 @@
 <?php
 
-namespace Form;
+namespace Marketplace\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CommentType extends AbstractType
+class ProjectLinkType extends AbstractType
 {
     public function getName()
     {
-        return 'comment';
+        return 'project_link';
     }
 
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('id', 'hidden');
-        $builder->add('content', 'textarea');
+        $builder->add('label', 'text');
+        $builder->add('url', 'text');
     }
 
     public function getDefaultOptions(array $options)
@@ -25,7 +25,8 @@ class CommentType extends AbstractType
         $options = array_merge(array(
             'validation_constraint' => new Assert\Collection(array(
                 'fields' => array(
-                    'content' => new Assert\NotBlank(),
+                    'label' => new Assert\NotBlank(),
+                    'url'   => new Assert\Url(),
                 ),
                 'allowExtraFields' => true,
             ))

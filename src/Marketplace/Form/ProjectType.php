@@ -1,6 +1,6 @@
 <?php
 
-namespace Form;
+namespace Marketplace\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;

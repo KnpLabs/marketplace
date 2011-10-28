@@ -1,6 +1,6 @@
 <?php
 
-namespace Provider\Controller;
+namespace Marketplace\Provider\Controller;
 
 use Silex\ControllerProviderInterface;
 use Silex\Application;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Provider\Controller;
+namespace Marketplace\Provider\Controller;
 
 use Silex\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
 
-use Form;
+use Marketplace\Form;
 
 class Project implements ControllerProviderInterface
 {
