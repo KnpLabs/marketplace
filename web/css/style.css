@@ -42,3 +42,7 @@ input {
 .modal form {
     margin: 0;
 }
+
+.comment_content {
+    margin-left: 60px;
+}
