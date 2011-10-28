@@ -1,9 +1,5 @@
 <?php
 
-use Marketplace\Provider\Controller\Security as SecurityController;
-use Marketplace\Provider\Controller\Project as ProjectController;
-use Marketplace\Provider\Controller\Category as CategoryController;
-
 $app = require_once __DIR__.'/bootstrap.php';
 
 /**
@@ -21,8 +17,8 @@ $app->get('/', function() use ($app) {
     ));
 })->bind('homepage');
 
-$app->mount('/', new SecurityController());
-$app->mount('/project', new ProjectController());
-$app->mount('/category', new CategoryController());
+$app->mount('/', new \Marketplace\Provider\Controller\Security());
+$app->mount('/project', new \Marketplace\Provider\Controller\Project());
+$app->mount('/category', new \Marketplace\Provider\Controller\Category());
 
 return $app;

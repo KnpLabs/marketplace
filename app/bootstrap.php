@@ -23,11 +23,6 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Panda\DiscountServiceProvider;
 
-/** Marketplace service providers */
-use Marketplace\Provider\Service\Security as SecurityServiceProvider;
-use Marketplace\Provider\Service\Migration as MigrationServiceProvider;
-use Marketplace\Provider\Service\Repository as RepositoryServiceProvider;
-
 /** Twig Extensions */
 use Marketplace\Twig\MarketplaceExtension;
 
@@ -62,9 +57,9 @@ if (!file_exists(__DIR__.'/config.php')) {
 require_once __DIR__.'/config.php';
 
 /** Marketplace providers */
-$app->register(new SecurityServiceProvider());
-$app->register(new MigrationServiceProvider());
-$app->register(new RepositoryServiceProvider(), array('repository.repositories' => array(
+$app->register(new \Marketplace\Provider\Service\Security());
+$app->register(new \Marketplace\Provider\Service\Migration());
+$app->register(new \Marketplace\Provider\Service\Repository(), array('repository.repositories' => array(
     'projects'      => 'Marketplace\\Repository\\Project',
     'comments'      => 'Marketplace\\Repository\\Comment',
     'project_votes' => 'Marketplace\\Repository\\ProjectVote',
