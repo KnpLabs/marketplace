@@ -11,7 +11,7 @@ $app['autoloader']->registerNamespaces(array(
     'Panda'            => __DIR__.'/../vendor/SilexDiscountServiceProvider/src',
 ));
 
-$app['autoloader']->registerNamespaceFallbacks(array(__DIR__));
+$app['autoloader']->registerNamespaceFallbacks(array(__DIR__.'/../src/'));
 
 /** Silex Extensions */
 use Silex\Provider\SymfonyBridgesServiceProvider;
@@ -50,7 +50,7 @@ $app->register(new TranslationServiceProvider(), array(
 
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => array(
-        __DIR__.'/Resources/views',
+        __DIR__.'/../src/Resources/views',
         __DIR__.'/../vendor/Symfony/Bridge/Twig/Resources/views/Form',
     ),
     'twig.class_path' => __DIR__.'/../vendor/silex/vendor/twig/lib',
