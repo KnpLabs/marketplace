@@ -3,6 +3,7 @@
 use Provider\Controller\Security as SecurityController;
 use Provider\Controller\Project as ProjectController;
 use Provider\Controller\Category as CategoryController;
+use Provider\Controller\Comment as CommentController;
 
 $app = require_once __DIR__.'/bootstrap.php';
 
@@ -24,5 +25,6 @@ $app->get('/', function() use ($app) {
 $app->mount('/', new SecurityController());
 $app->mount('/project', new ProjectController());
 $app->mount('/category', new CategoryController());
+$app->mount('/comment', new CommentController());
 
 return $app;

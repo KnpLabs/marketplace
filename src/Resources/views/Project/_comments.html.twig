@@ -38,16 +38,23 @@
             {% endfor %}
 
             <div>
-                <form method="post" action="{{ path('project_comment', { "id": project.id }) }}">
+                <form method="post" action="{{ path('project_comment', { "id": project.id }) }}" class="comment_form">
 
                     {{ form_errors(form) }}
                     
+                    <ul class="tabs">
+                        <li class="active"><a href="" class="write_comment_link">Comment</a></li>
+                        <li><a href="" class="show_preview_link">Preview</a></li>
+                    </ul>
+                    
                     <fieldset>
-                        <div class="clearfix">
+                        <div class="comment_preview"></div>
+
+                        <div class="clearfix comment_field_container">
                             {{ form_label(form.content) }}
                             {{ form_errors(form.content) }}
                             <div class="input">
-                                {{ form_widget(form.content, { "attr": { "class": "xlarge" } }) }}
+                                {{ form_widget(form.content, { "attr": { "class": "xlarge comment_field" } }) }}
                             </div>
                         </div>
                     </fieldset>
