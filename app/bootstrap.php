@@ -11,7 +11,7 @@ $app['autoloader']->registerNamespaces(array(
     'Panda'            => __DIR__.'/../vendor/SilexDiscountServiceProvider/src',
 ));
 
-$app['autoloader']->registerNamespaceFallbacks(array(__DIR__));
+$app['autoloader']->registerNamespaceFallbacks(array(__DIR__.'/../src/'));
 
 /** Silex Extensions */
 use Silex\Provider\SymfonyBridgesServiceProvider;
