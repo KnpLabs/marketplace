@@ -12,7 +12,7 @@ Setting up the marketplace is a simple 3-step process:
 # install vendors
 bin/vendors install
 # create and customize your config.php
-cp src/config.php.dist src/config.php
+cp app/config.php.dist app/config.php
 # make sure the cache folder is writable
 chmod 777 cache
 ```
