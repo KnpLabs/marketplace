@@ -51,11 +51,14 @@
                         <div class="comment_preview"></div>
 
                         <div class="clearfix comment_field_container">
-                            {{ form_label(form.content) }}
-                            {{ form_errors(form.content) }}
-                            <div class="input">
-                                {{ form_widget(form.content, { "attr": { "class": "xlarge comment_field" } }) }}
-                            </div>
+                            {{ form_widget(form.content, { 
+                                "attr": { 
+                                    "class": "xxlarge comment_field",
+                                    "placeholder" : "Add a comment...",
+                                    "rows": 5
+                                    }
+                                })
+                            }}
                         </div>
                     </fieldset>
 
