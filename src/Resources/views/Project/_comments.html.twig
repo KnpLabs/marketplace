@@ -20,7 +20,9 @@
 
                 <div>
                     <img src="{{ gravatar(comment.username) }}" class="gravatar" />
-                    {{ comment.content_html | raw }}
+                    <div class="comment_content">
+                        {{ comment.content_html | raw }}
+                    </div>
                 </div>
 
                 <div class="clear"></div>
