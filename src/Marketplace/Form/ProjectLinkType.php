@@ -17,7 +17,7 @@ class ProjectLinkType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder->add('label', 'text');
-        $builder->add('url', 'text');
+        $builder->add('url', 'url');
     }
 
     public function getDefaultOptions(array $options)
