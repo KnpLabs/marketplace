@@ -46,3 +46,7 @@ input {
 .comment_content {
     margin-left: 60px;
 }
+
+.comment_form fieldset {
+    clear:left;
+}
