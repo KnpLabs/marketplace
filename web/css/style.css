@@ -51,6 +51,9 @@ input {
     clear:left;
 }
 
-.preview_tabs {
-    display:none;
+.preview_tabs, .comment_preview_block {
+    display: none;
+}
+.comment_preview_block.active {
+    display: block;
 }

@@ -1,40 +1,28 @@
 jQuery(function($) {
-	var field, parent, preview_link, comment_link, comment_field_container, preview_container;
-	
-	$(".preview_tabs").show();
+	var 
+		// URL we send the ajax request to 
+		url = $(".show_preview_link").data("url"),
+		// Contain transformed HTML
+		preview_container = $("#preview"),
+		// Textara the comment is typed into
+		field = $(".comment_field");
+
+	/** 
+	 * Handle tab selection change
+	 * (and trigger preview if user selected the "preview" tab)
+	 */
+	function onTabChange(event) {
+		var target = $(event.target);
 		
-	field = $(".comment_field");
+		// If we clicked on the preview link		
+		if ($(event.target).hasClass("show_preview_link")) {
+			preview_container.text("Loading preview...");
 
-	comment_field_container = $(".comment_field_container");
+			$.post(url, { "markdown_content" : field.val() }, function (response, textStatus, connection) {
+				preview_container.html(response);
+			}, "html");
+		}		
+	}
 
-	preview_container = $(".comment_preview");
-
-	preview_link = $("a.show_preview_link");
-	comment_link = $("a.write_comment_link");
-
-	comment_link.bind("click", function(event) {
-		event.preventDefault();
-
-		preview_link.parent("li").removeClass("active");
-		comment_link.parent("li").addClass("active");
-		comment_field_container.show();
-		preview_container.empty().hide();
-	})
-
-	preview_link.bind("click", function(event) { 
-		event.preventDefault();
-		
-		comment_link.parent("li").removeClass("active");
-		preview_link.parent("li").addClass("active");
-
-		comment_field_container.hide();
-		preview_container.show().text("Loading preview...");
-
-		$.post(preview_link.attr("href"), {
-			"markdown_content" : field.val() 
-		}, function (response, textStatus, connection) {
-			preview_container.html(response);
-		}, "html");
-
-	});
+	$(".preview_tabs").show().tabs().bind("change", onTabChange);
 });
