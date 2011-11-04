@@ -6,10 +6,15 @@ require_once __DIR__.'/../vendor/lightopenid/openid.php';
 $app = new Silex\Application();
 
 $app['autoloader']->registerNamespaces(array(
-    'Marketplace'      => __DIR__.'/../src',
-    'Symfony'          => __DIR__.'/../vendor/',
-    'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
-    'Panda'            => __DIR__.'/../vendor/SilexDiscountServiceProvider/src',
+    'Marketplace'       => __DIR__.'/../src',
+    'Symfony'           => __DIR__.'/../vendor/',
+    'Doctrine\\Common'  => __DIR__.'/../vendor/doctrine-common/lib',
+    'Panda'             => __DIR__.'/../vendor/SilexDiscountServiceProvider/src',
+    'Behat\\Mink'       => __DIR__.'/../vendor/behat/mink/src',
+    'Goutte'            => __DIR__.'/../vendor/goutte/src',
+    'Behat\SahiClient'  => __DIR__.'/../vendor/behat/sahiclient/src',
+    'Buzz'              => __DIR__.'/../vendor/behat/sahiclient/vendor/Buzz/lib',
+    'Zend'              => __DIR__.'/../vendor/zend/library'
 ));
 
 /** Silex Extensions */
