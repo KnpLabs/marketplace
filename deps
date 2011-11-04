@@ -28,3 +28,9 @@
 [goutte]
     git=https://github.com/fabpot/Goutte.git
     target=/goutte
+[sahiclient]
+    git=https://github.com/Behat/SahiClient.git
+    target=/behat/sahiclient
+[zend]
+    git=https://github.com/zendframework/zf2.git
+    target=/zend
