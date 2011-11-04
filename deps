@@ -16,3 +16,15 @@
     git = git://gitorious.org/lightopenid/lightopenid.git
 [SilexDiscountServiceProvider]
     git = https://github.com/geoffrey/SilexDiscountServiceProvider.git
+[gherkin]
+    git=https://github.com/Behat/Gherkin.git
+    target=/behat/gherkin
+[behat]
+    git=https://github.com/Behat/Behat.git
+    target=/behat/behat
+[mink]
+    git=https://github.com/Behat/Mink.git
+    target=/behat/mink
+[goutte]
+    git=https://github.com/fabpot/Goutte.git
+    target=/goutte
