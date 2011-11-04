@@ -1,6 +1,8 @@
 jQuery(function($) {
 	var field, parent, preview_link, comment_link, comment_field_container, preview_container;
 	
+	$(".preview_tabs").show();
+		
 	field = $(".comment_field");
 
 	comment_field_container = $(".comment_field_container");

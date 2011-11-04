@@ -50,3 +50,7 @@ input {
 .comment_form fieldset {
     clear:left;
 }
+
+.preview_tabs {
+    display:none;
+}
