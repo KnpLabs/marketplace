@@ -30,7 +30,7 @@ jQuery(function($) {
 		comment_field_container.hide();
 		preview_container.show().text("Loading preview...");
 
-		$.post("/index.php/comment/preview", {
+		$.post(preview_link.attr("href"), {
 			"markdown_content" : field.val() 
 		}, function (response, textStatus, connection) {
 			preview_container.html(response);
