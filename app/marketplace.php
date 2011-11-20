@@ -20,5 +20,6 @@ $app->get('/', function() use ($app) {
 $app->mount('/', new \Marketplace\Provider\Controller\Security());
 $app->mount('/project', new \Marketplace\Provider\Controller\Project());
 $app->mount('/category', new \Marketplace\Provider\Controller\Category());
+$app->mount('/comment', new \Marketplace\Provider\Controller\Comment());
 
 return $app;

@@ -38,19 +38,29 @@
             {% endfor %}
 
             <div>
-                <form method="post" action="{{ path('project_comment', { "id": project.id }) }}">
+                <form method="post" action="{{ path('project_comment', { "id": project.id }) }}" class="comment_form">
 
                     {{ form_errors(form) }}
                     
-                    <fieldset>
-                        <div class="clearfix">
-                            {{ form_label(form.content) }}
-                            {{ form_errors(form.content) }}
-                            <div class="input">
-                                {{ form_widget(form.content, { "attr": { "class": "xlarge" } }) }}
-                            </div>
+                    <ul class="tabs preview_tabs">
+                        <li class="active"><a href="#comment" class="write_comment_link">Comment</a></li>
+                        <li><a href="#preview" data-url="{{ path('comment_preview') }}" class="show_preview_link">Preview</a></li>
+                    </ul>
+                    
+                    <div class="tab-content">
+                        <div id="preview" class="comment_preview_block"></div>
+
+                        <div id="comment" class="active clearfix comment_preview_block">
+                            {{ form_widget(form.content, { 
+                                "attr": { 
+                                    "class": "xxlarge comment_field",
+                                    "placeholder" : "Add a comment...",
+                                    "rows": 5
+                                    }
+                                })
+                            }}
                         </div>
-                    </fieldset>
+                    </div>
 
                   {{ form_rest(form) }}
 

@@ -46,3 +46,14 @@ input {
 .comment_content {
     margin-left: 60px;
 }
+
+.comment_form fieldset {
+    clear:left;
+}
+
+.preview_tabs, .comment_preview_block {
+    display: none;
+}
+.comment_preview_block.active {
+    display: block;
+}
