@@ -1,6 +1,6 @@
 <?php
 
-namespace Repository;
+namespace Marketplace\Repository;
 
 use Marketplace\Repository;
 

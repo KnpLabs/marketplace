@@ -1,12 +1,12 @@
 <?php
 
-namespace Provider\Controller;
+namespace Marketplace\Provider\Controller;
 
 use Silex\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
 
-use Form;
+use Marketplace\Form;
 
 class Project implements ControllerProviderInterface
 {
@@ -193,7 +193,7 @@ class Project implements ControllerProviderInterface
 
                 $app['projects']->insert($project);
 
-                return $app->redirect('/');
+                return $app->redirect($app['url_generator']->generate('homepage'));
             }
 
             return $app['twig']->render('Project/new.html.twig', array(
@@ -217,7 +217,7 @@ class Project implements ControllerProviderInterface
          */
         $controllers->get('/{id}/vote', function($id) use ($app) {
             $username = $app['session']->get('username');
-            
+
             if (!$app['project_votes']->existsForProjectAndUser($id, $username)) {
                 $app['project_votes']->insert(array(
                     'username'   => $username,
@@ -225,7 +225,7 @@ class Project implements ControllerProviderInterface
                 ));
             }
 
-            return $app->redirect(urldecode($app['request']->query->get('return_url', '/')));
+            return $app->redirect(urldecode($app['request']->query->get('return_url', $app['url_generator']->generate('homepage'))));
         })->bind('project_vote');
 
         /**
@@ -237,7 +237,7 @@ class Project implements ControllerProviderInterface
                 'username'   => $app['session']->get('username'),
             ));
 
-            return $app->redirect(urldecode($app['request']->query->get('return_url', '/')));
+            return $app->redirect(urldecode($app['request']->query->get('return_url', $app['url_generator']->generate('homepage'))));
         })->bind('project_unvote');
 
         return $controllers;

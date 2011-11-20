@@ -1,6 +1,6 @@
 <?php
 
-namespace Provider\Service;
+namespace Marketplace\Provider\Service;
 
 use Silex\ServiceProviderInterface;
 use Silex\Application;
