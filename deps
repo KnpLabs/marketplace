@@ -6,10 +6,6 @@
     git = https://github.com/symfony/TwigBridge.git
 [Symfony/Component/Translation]
     git = https://github.com/symfony/Translation.git
-[doctrine-dbal]
-    git = https://github.com/doctrine/dbal.git
-[doctrine-common]
-    git = https://github.com/doctrine/common.git
 [Symfony/Component/Validator]
     git = https://github.com/symfony/Validator.git
 [lightopenid]
@@ -18,3 +14,4 @@
     git = https://github.com/geoffrey/SilexDiscountServiceProvider.git
 [KnpSilexExtensions]
     git = https://github.com/KnpLabs/KnpSilexExtensions.git
+    version = patch-1

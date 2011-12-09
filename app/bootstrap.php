@@ -8,7 +8,6 @@ $app = new Silex\Application();
 $app['autoloader']->registerNamespaces(array(
     'Marketplace'      => __DIR__.'/../src',
     'Symfony'          => __DIR__.'/../vendor/',
-    'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
     'Panda'            => __DIR__.'/../vendor/SilexDiscountServiceProvider/src',
     'Knp'              => __DIR__.'/../vendor/KnpSilexExtensions/'
 ));
@@ -36,8 +35,8 @@ $app->register(new DiscountServiceProvider());
 $app->register(new ValidatorServiceProvider());
 
 $app->register(new DoctrineServiceProvider(), array(
-    'db.dbal.class_path'    => __DIR__.'/../vendor/doctrine-dbal/lib',
-    'db.common.class_path'  => __DIR__.'/../vendor/doctrine-common/lib',
+    'db.dbal.class_path'    => __DIR__.'/../vendor/silex/vendor/doctrine-dbal/lib',
+    'db.common.class_path'  => __DIR__.'/../vendor/silex/vendor/doctrine-common/lib',
 ));
 
 $app->register(new TranslationServiceProvider(), array(
