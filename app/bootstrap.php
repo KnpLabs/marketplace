@@ -10,6 +10,7 @@ $app['autoloader']->registerNamespaces(array(
     'Symfony'          => __DIR__.'/../vendor/',
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
     'Panda'            => __DIR__.'/../vendor/SilexDiscountServiceProvider/src',
+    'Knp'              => __DIR__.'/../vendor/KnpSilexExtensions/'
 ));
 
 /** Silex Extensions */
@@ -22,6 +23,7 @@ use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Panda\DiscountServiceProvider;
+use Knp\Provider\RepositoryServiceProvider;
 
 /** Twig Extensions */
 use Marketplace\Twig\MarketplaceExtension;
@@ -50,6 +52,13 @@ $app->register(new TwigServiceProvider(), array(
     'twig.class_path' => __DIR__.'/../vendor/silex/vendor/twig/lib',
 ));
 
+$app->register(new RepositoryServiceProvider(), array('repository.repositories' => array(
+    'projects'      => 'Marketplace\\Repository\\Project',
+    'comments'      => 'Marketplace\\Repository\\Comment',
+    'project_votes' => 'Marketplace\\Repository\\ProjectVote',
+    'project_links' => 'Marketplace\\Repository\\ProjectLink',
+)));
+
 if (!file_exists(__DIR__.'/config.php')) {
     throw new RuntimeException('You must create your own configuration file ("src/config.php"). See "src/config.php.dist" for an example config file.');
 }
@@ -59,12 +68,6 @@ require_once __DIR__.'/config.php';
 /** Marketplace providers */
 $app->register(new \Marketplace\Provider\Service\Security());
 $app->register(new \Marketplace\Provider\Service\Migration());
-$app->register(new \Marketplace\Provider\Service\Repository(), array('repository.repositories' => array(
-    'projects'      => 'Marketplace\\Repository\\Project',
-    'comments'      => 'Marketplace\\Repository\\Comment',
-    'project_votes' => 'Marketplace\\Repository\\ProjectVote',
-    'project_links' => 'Marketplace\\Repository\\ProjectLink',
-)));
 
 $app->before(function() use ($app) {
     $app['twig']->addGlobal('categories', $app['project.categories']);
