@@ -30,7 +30,7 @@ class ProjectLinkType extends AbstractType
                 ),
                 'allowExtraFields' => true,
             ))
-        ));
+        ), $options);
 
         return $options;
     }

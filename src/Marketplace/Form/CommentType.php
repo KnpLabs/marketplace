@@ -29,7 +29,7 @@ class CommentType extends AbstractType
                 ),
                 'allowExtraFields' => true,
             ))
-        ));
+        ), $options);
 
         return $options;
     }
