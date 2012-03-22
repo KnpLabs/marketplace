@@ -11,7 +11,7 @@
 [lightopenid]
     git = git://gitorious.org/lightopenid/lightopenid.git
 [SilexDiscountServiceProvider]
-    git = https://github.com/geoffrey/SilexDiscountServiceProvider.git
+    git = https://github.com/ubermuda/SilexDiscountServiceProvider.git
 [KnpSilexExtensions]
     git = https://github.com/KnpLabs/KnpSilexExtensions.git
     version = patch-1
