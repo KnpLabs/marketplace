@@ -17,4 +17,8 @@ class Repository implements ServiceProviderInterface
             }
         });
     }
+    public function boot(Application $app)
+    {
+
+    }
 }
