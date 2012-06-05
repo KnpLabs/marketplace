@@ -3,9 +3,11 @@
 namespace Marketplace\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CommentType extends AbstractType
 {
@@ -14,23 +16,21 @@ class CommentType extends AbstractType
         return 'comment';
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'hidden');
         $builder->add('content', 'textarea');
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $options = array_merge(array(
+        $resolver->setDefaults(array(
             'validation_constraint' => new Assert\Collection(array(
                 'fields' => array(
                     'content' => new Assert\NotBlank(),
                 ),
                 'allowExtraFields' => true,
             ))
-        ), $options);
-
-        return $options;
+        ));
     }
 }
