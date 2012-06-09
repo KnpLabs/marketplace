@@ -24,7 +24,7 @@
                     "type": "zip"
                 },
                 "autoload": {
-                    "psr-0": { "Panda\\": "src/" }
+                    "psr-0": { "Panda": "src/" }
                 },
                 "target-dir": ""
             }

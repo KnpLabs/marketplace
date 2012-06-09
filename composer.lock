@@ -1,5 +1,5 @@
 {
-    "hash": "e4deaee9829e16c22a7122fb3a7aa19c",
+    "hash": "5584881551cf1c594f219feca78af8c5",
     "packages": [
         {
             "package": "doctrine/common",
@@ -34,7 +34,7 @@
         {
             "package": "silex/silex",
             "version": "dev-master",
-            "source-reference": "8b7796f94154e0cb51db3733e4262de50114c121"
+            "source-reference": "481b21ebc93f1e616e2810ab6b6d42ef2658b629"
         },
         {
             "package": "symfony/event-dispatcher",
@@ -61,13 +61,13 @@
         {
             "package": "symfony/form",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
+            "source-reference": "5ee84e98f9e07afeba6e8194dc9d2948bef19ad8"
         },
         {
             "package": "symfony/form",
             "version": "dev-master",
-            "source-reference": "5ee84e98f9e07afeba6e8194dc9d2948bef19ad8"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/http-foundation",
@@ -94,24 +94,24 @@
         {
             "package": "symfony/locale",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
+            "source-reference": "741210486db314ff288a44de2628da7ee31d383e"
         },
         {
             "package": "symfony/locale",
             "version": "dev-master",
-            "source-reference": "741210486db314ff288a44de2628da7ee31d383e"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/options-resolver",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/options-resolver",
             "version": "dev-master",
             "source-reference": "addf0f914af769838e2c4ada01ceb3e16d62bf83"
-        },
-        {
-            "package": "symfony/options-resolver",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/routing",
@@ -127,13 +127,13 @@
         {
             "package": "symfony/translation",
             "version": "dev-master",
-            "source-reference": "db3e85934353a130d743b2ddd53dd678c8ebca12"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/translation",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
+            "source-reference": "db3e85934353a130d743b2ddd53dd678c8ebca12"
         },
         {
             "package": "symfony/twig-bridge",
@@ -149,24 +149,24 @@
         {
             "package": "symfony/validator",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
+            "source-reference": "9c89324845ccc24214f7fd307b9dc646d41a0a6f"
         },
         {
             "package": "symfony/validator",
             "version": "dev-master",
-            "source-reference": "9c89324845ccc24214f7fd307b9dc646d41a0a6f"
-        },
-        {
-            "package": "twig/twig",
-            "version": "dev-master",
-            "source-reference": "6d072640c44f1781049afd2d96060c72da80662a"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "twig/twig",
             "version": "dev-master",
             "alias-pretty-version": "1.8.x-dev",
             "alias-version": "1.8.9999999.9999999-dev"
+        },
+        {
+            "package": "twig/twig",
+            "version": "dev-master",
+            "source-reference": "018c52fe59479b65920d18a6461edeb312963f9d"
         },
         {
             "package": "ubermuda/discount-service-provider",
