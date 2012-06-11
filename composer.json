@@ -20,7 +20,7 @@
                 "name": "ubermuda/discount-service-provider",
                 "version": "1.0",
                 "dist": {
-                    "url": "https://github.com/memphys/SilexDiscountServiceProvider/zipball/master",
+                    "url": "https://github.com/ubermuda/SilexDiscountServiceProvider/zipball/master",
                     "type": "zip"
                 },
                 "autoload": {
