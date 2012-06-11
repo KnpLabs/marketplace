@@ -40,4 +40,9 @@ class Security implements ServiceProviderInterface
             $app['twig']->addGlobal('username', $app['session']->get('username'));
         });
     }
+
+    public function boot(Application $app)
+    {
+
+    }
 }

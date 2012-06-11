@@ -1,0 +1,39 @@
+{
+    "name": "knp/marketplace",
+    "require": {
+        "silex/silex": "dev-master",
+        "twig/twig": ">=1.2.0",
+        "symfony/twig-bridge": "2.1.*",
+        "symfony/validator": "2.1.*",
+        "fp/lightopenid": "dev-master",
+        "knplabs/repository-service-provider": "dev-master",
+        "symfony/form": "2.1.*",
+        "symfony/translation": "2.1.*",
+        "symfony/finder": "2.1.*",
+        "ubermuda/discount-service-provider": "*"
+    },
+
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "ubermuda/discount-service-provider",
+                "version": "1.0",
+                "dist": {
+                    "url": "https://github.com/ubermuda/SilexDiscountServiceProvider/zipball/master",
+                    "type": "zip"
+                },
+                "autoload": {
+                    "psr-0": { "Panda": "src/" }
+                },
+                "target-dir": ""
+            }
+        }
+    ],
+
+    "autoload": {
+        "psr-0": {
+            "Marketplace": "src/"
+        }
+    }
+}

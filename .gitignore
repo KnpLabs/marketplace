@@ -1,1 +1,7 @@
 app/config.php
+
+# vendor's directory
+vendor
+
+#composer
+composer.phar

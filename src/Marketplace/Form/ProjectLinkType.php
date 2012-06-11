@@ -3,9 +3,11 @@
 namespace Marketplace\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProjectLinkType extends AbstractType
 {
@@ -14,15 +16,15 @@ class ProjectLinkType extends AbstractType
         return 'project_link';
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('label', 'text');
         $builder->add('url', 'url');
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $options = array_merge(array(
+        $resolver->setDefaults(array(
             'validation_constraint' => new Assert\Collection(array(
                 'fields' => array(
                     'label' => new Assert\NotBlank(),
@@ -30,8 +32,6 @@ class ProjectLinkType extends AbstractType
                 ),
                 'allowExtraFields' => true,
             ))
-        ), $options);
-
-        return $options;
+        ));
     }
 }
