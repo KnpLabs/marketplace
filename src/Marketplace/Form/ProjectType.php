@@ -29,18 +29,18 @@ class ProjectType extends AbstractType
             'categories' => function (Options $options, $value) {
                 return array_merge(array('none' => 'No category'), $value);
             },
-            'validation_constraint' => new Assert\Collection(array(
-                'fields' => array(
-                    'name'        => new Assert\NotBlank(),
-                    'description' => new Assert\NotBlank(),
-                    // 'category'    => new Assert\Choice(array(
-                    //     'choices' => function (Options $options, $value) {
-                    //         return array_keys($options['categories']);
-                    //     }
-                    // ))
-                ),
-                'allowExtraFields' => true,
-            ))
+            'validation_constraint' => function(Options $options, $value) {
+                return new Assert\Collection(array(
+                    'fields' => array(
+                        'name'        => new Assert\NotBlank(),
+                        'description' => new Assert\NotBlank(),
+                        'category'    => new Assert\Choice(array(
+                            'choices' => array_keys($options['categories'])
+                        ))
+                    ),
+                    'allowExtraFields' => true,
+                ));
+            }
         ));
     }
 }
